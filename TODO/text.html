@@ -1,0 +1,1905 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+
+	<meta name="author" content="Rexs development &amp; Design">
+	<title>Vanilla</title>
+	<link
+		href="https://fonts.googleapis.com/css?family=Montserrat:300,400,400i|Open+Sans:300,400,700|Oswald:400|Roboto:300,400"
+		rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+		integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"
+		integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.css"
+		integrity="sha256-R91pD48xW+oHbpJYGn5xR0Q7tMhH4xOrWn1QqMRINtA=" crossorigin="anonymous" />
+	<link href="https://getbukkit.org/assets/css/style.min.css" rel="stylesheet">
+	<link href="https://getbukkit.org/assets/css/getbukkit-2.0.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simplemde/1.11.2/simplemde.min.css"
+		integrity="sha256-Is0XNfNX8KF/70J2nv8Qe6BWyiXrtFxKfJBHoDgNAEM=" crossorigin="anonymous" />
+	<link href="https://getbukkit.org/assets/css/responsive.min.css" rel="stylesheet">
+	<link rel="apple-touch-icon" sizes="180x180" href="https://getbukkit.org/assets/img/favicon/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="https://getbukkit.org/assets/img/favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="https://getbukkit.org/assets/img/favicon/favicon-16x16.png">
+	<link rel="manifest" href="https://getbukkit.org/assets/img/favicon/manifest.json">
+	<link rel="mask-icon" href="https://getbukkit.org/assets/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
+	<meta name="theme-color" content="#111" />
+</head>
+
+<body>
+	<div id="navbar">
+		<nav class="navbar navbar-default navbar-static-top">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+						data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="https://getbukkit.org/">
+						<img src="https://getbukkit.org/assets/img/getbukkitwhite.svg" alt="logo" class="logo">
+					</a>
+				</div>
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav navbar-right">
+						<ul class="small-nav">
+							<li><a href="https://getbukkit.org/sign-in">Sign in</a></li>
+							<li><a href="https://getbukkit.org/sign-up">Sign up</a></li>
+							<li><a href="https://getbukkit.org/contact">Contact us</a></li>
+							<li><a href="https://discord.gg/getbukkit">Discord</a></li>
+							<li><a href="https://getbukkit.org/news">News</a></li>
+							<li><a href="https://status.getbukkit.org">Status</a></li>
+							<li><a href="https://ramshard.com">Hosting</a></li>
+						</ul>
+						<li><a href="/">Home</a></li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+								aria-haspopup="true" aria-expanded="false">Downloads <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="https://getbukkit.org/download/vanilla">Vanilla</a></li>
+								<li><a href="https://getbukkit.org/download/spigot">Spigot</a></li>
+								<li><a href="https://getbukkit.org/download/craftbukkit">Craftbukkit</a></li>
+							</ul>
+						</li>
+						<li><a href="https://getbukkit.org/pricing">Pricing</a></li>
+						<li><a href="https://getbukkit.org/partners">Partners</a></li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+								aria-haspopup="true" aria-expanded="false">About <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="https://getbukkit.org/about-us">GetBukkit</a></li>
+								<li><a href="https://getbukkit.org/about-us/staff">Our Staff</a></li>
+							</ul>
+						</li>
+						<li><a href="https://getbukkit.org/sign-in"><img
+									src="https://getbukkit.org/assets/img/sign-in.png"
+									onmouseover="this.src='https://getbukkit.org/assets/img/sign-in-hover.png'"
+									onmouseout="this.src='https://getbukkit.org/assets/img/sign-in.png'" alt="sign in"
+									style="width: 16px;"></a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</div>
+	<div id="sub-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2">
+					<h1>Vanilla</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2 ccTop">
+				<div class="limit">
+					<a href="https://ramshard.com/aff.php?aff=405"><img
+							src="https://getbukkit.org/assets/img/Ramshardv2.gif" class="img-center img-responsive"></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="download">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 download">
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.17.1</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>41.6 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Tuesday, July 06 2021</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/c503fcf07fdff1ffb5296f656c3c7a09"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.17</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>41.6 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Tuesday, June 08 2021</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/e53ef45256328a28927e93c915342418"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.16.5</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>36.2 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Friday, January 15 2021</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/82fbeffe67b6c1ae98670cb3e066f76b"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.16.4</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>36.2 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Thursday, October 29 2020</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/82fbeffe67b6c1ae98670cb3e066f76b"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.16.3</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>36.2 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Thursday, September 10 2020</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/f40baf2aceb0fe0e30b55fe5cd3a58ea"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.16.2</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>36.2 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Wednesday, August 12 2020</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/a7e7c1cdaa48dcda9cdd88b7d205ec38"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.16.1</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>36.2 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Wednesday, June 24 2020</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/a7e7c1cdaa48dcda9cdd88b7d205ec38"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.15.2</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>34.5 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Tuesday, January 21 2020</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/17736f20cd1c875215cb5ba37ec2a285"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.15.1</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>34.5 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Tuesday, December 17 2019</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/17736f20cd1c875215cb5ba37ec2a285"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.15</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>34.5 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Tuesday, December 10 2019</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/ffba857cb2a80c836d96091afeac7c3a"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.14.4</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>34.3 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Friday, July 19 2019</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/5be16c1942635ee06179d71312a8239e"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.14.3</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>34.3 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Monday, June 24 2019</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/5be16c1942635ee06179d71312a8239e"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.14.2</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>34.3 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Monday, May 27 2019</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/888cabcdac1a2c0c466491388d642437"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.14.1</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>34.3 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Monday, May 13 2019</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/e8bafa6ca4e0a8661adceffb0779aeba"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.14</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>34.3 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Tuesday, April 23 2019</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/f0a13099a29d448ceecaf1dcd00260f3"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.13.2</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>32.3 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Monday, October 22 2018</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/d41d8cd98f00b204e9800998ecf8427e"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.13.1</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>32.3 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Monday, August 27 2018</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/867930125d21d1162da0d619e8b028d0"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.13</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>31.1 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Thursday, July 19 2018</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/yBKD29jxBQTUxJqTr4RbIrCH4gwoci8WmZgGz3ba5XrqKTDxLTYCEhk8NEDrLRvB"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.12.2</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>28.8 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Monday, September 18 2017</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/aca9f985a2d521b3e2cb9196c2a59a70"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.12.1</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>28.8 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Friday, August 04 2017</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/5ffWURvfjPpb2iXEVLzwaIEvxQYIx7IKVtLkXbuF"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.12</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>28.8 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Wednesday, June 07 2017</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/8494e844e911ea0d63878f64da9dcc21f53a3463"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.11.2</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>9.29 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Thursday, May 18 2017</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/f00c294a1576e03fddcac777c3cf4c7d404c4ba4"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.11.1</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>9.27 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Tuesday, December 20 2016</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/1f97bd101e508d7b52b3d6a7879223b000b5eba0"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.11</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>9.26 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Monday, November 14 2016</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/48820c84cb1ed502cb5b2fe23b8153d5e4fa61c0"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.10.2</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>9.26 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Thursday, June 23 2016</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/3d501b23df53c548254f5e3f66492d178a48db63"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.10.1</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>9.26 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Wednesday, June 22 2016</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/cb4c6f9f51a845b09a8861cdbe0eea3ff6996dee"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.10</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>9.02 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Wednesday, June 08 2016</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/a96617ffdf5dabbb718ab11a9a68e50545fc5bee"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.9.4</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>8.96 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Tuesday, May 10 2016</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/edbb7b1758af33d365bf835eb9d13de005b1e274"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.9.3</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>8.96 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Tuesday, May 10 2016</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/8e897b6b6d784f745332644f4d104f7a6e737ccf"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.9.2</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>8.44 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Wednesday, March 30 2016</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/2b95cc7b136017e064c46d04a5825fe4cfa1be30"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.9.1</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>8.44 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Wednesday, March 30 2016</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/bf95d9118d9b4b827f524c878efd275125b56181"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.9</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>8.44 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Monday, February 29 2016</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/b4d449cf2918e0f3bd8aa18954b916a4d1880f0d"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.8.9</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>7.94 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Thursday, December 03 2015</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/b58b2ceb36e01bcd8dbf49c8fb66c55a9f0676cd"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.8.8</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>7.94 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Monday, July 27 2015</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/5fafba3f58c40dc51b5c3ca72a98f62dfdae1db7"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.8.7</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>9.33 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Friday, June 05 2015</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/35c59e16d1f3b751cd20b76b9b8a19045de363a9"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.8.6</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>9.33 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Monday, May 25 2015</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/2bd44b53198f143fb278f8bec3a505dad0beacd2"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.8.5</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>9.33 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Friday, May 22 2015</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/ea6dd23658b167dbc0877015d1072cac21ab6eee"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.8.4</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>9.33 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Friday, April 17 2015</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/dd4b5eba1c79500390e0b0f45162fa70d38f8a3d"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.8.3</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>9.33 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Friday, February 20 2015</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/163ba351cb86f6390450bb2a67fafeb92b6c0f2f"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.8.2</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>9.33 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Thursday, February 19 2015</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/a37bdd5210137354ed1bfe3dac0a5b77fe08fe2e"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.8.1</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>7.54 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Monday, November 24 2014</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/68bfb524888f7c0ab939025e07e5de08843dac0f"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.8</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>9.89 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Tuesday, September 02 2014</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/a028f00e678ee5c6aef0e29656dca091b5df11c7"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.7.10</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>9.16 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Wednesday, May 14 2014</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/952438ac4e01b4d115c5fc38f891710c4941df29"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.7.9</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>9.16 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Monday, April 14 2014</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/4cec86a928ec171fdc0c6b40de2de102f21601b5"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.7.8</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>9.16 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Wednesday, April 09 2014</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/c69ebfb84c2577661770371c4accdd5f87b8b21d"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.7.7</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>9.04 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Wednesday, April 09 2014</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/a6ffc1624da980986c6cc12a1ddc79ab1b025c62"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.7.6</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>9.04 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Wednesday, April 09 2014</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/41ea7757d4d7f74b95fc1ac20f919a8e521e910c"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.7.5</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>8.75 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Wednesday, February 26 2014</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/e1d557b2e31ea881404e41b05ec15c810415e060"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.7.4</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>8.75 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Monday, December 09 2013</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/61220311cef80aecc4cd8afecd5f18ca6b9461ff"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.7.3</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>8.75 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Friday, December 06 2013</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/707857a7bc7bf54fe60d557cca71004c34aa07bb"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.7.2</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>8.74 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Friday, October 25 2013</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/3716cac82982e7c2eb09f83028b555e9ea606002"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.6.4</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>5.85 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Thursday, September 19 2013</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/050f93c1f3fe9e2052398f7bd6aca10c63d64a87"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.6.2</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>5.85 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Friday, July 05 2013</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/01b6ea555c6978e6713e2a2dfd7fe19b1449ca54"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.6.1</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>2.25 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Friday, June 28 2013</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/0252918a5f9d47e3c6eb1dfec02134d1374a89b4"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.5.2</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>2.25 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Thursday, April 25 2013</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/f9ae3f651319151ce99a0bfad6b34fa16eb6775f"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.5.1</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>1.97 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Wednesday, March 20 2013</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/d07c71ee2767dabb79fb32dad8162e1b854d5324"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.4.7</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>1.97 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Thursday, December 27 2012</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/2f0ec8efddd2f2c674c77be9ddb370b727dec676"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.4.5</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>1.95 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Wednesday, December 19 2012</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/c12fd88a8233d2c517dbc8196ba2ae855f4d36ea"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.4.6</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>1.95 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Wednesday, December 19 2012</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/a0aeb5709af5f2c3058c1cf0dc6b110a7a61278c"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.4.4</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>1.95 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Thursday, December 13 2012</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/4215dcadb706508bf9d6d64209a0080b9cee9e71"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.4.2</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>1.92 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Saturday, November 24 2012</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/5be700523a729bb78ef99206fb480a63dcd09825"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.3.2</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>1.72 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Wednesday, August 15 2012</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/3de2ae6c488135596e073a9589842800c9f53bfe"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.3.1</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>1.72 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Tuesday, July 31 2012</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/82563ce498bfc1fc8a2cb5bf236f7da86a390646"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.2.5</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>1.34 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Thursday, March 29 2012</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/d8321edc9470e56b8ad5c67bbd16beba25843336"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="download-pane">
+						<div class="row vdivide">
+							<div class="col-sm-3">
+								<h4>Version</h4>
+								<h2>1.2.5</h2>
+							</div>
+							<div class="col-sm-2">
+								<h4>Size</h4>
+								<h3>1.34 MB</h3>
+							</div>
+							<div class="col-sm-3">
+								<h4>Release date</h4>
+								<h3>Wednesday, February 29 2012</h3>
+							</div>
+							<div class="col-sm-4">
+								<div class="push"></div>
+								<div class="btn-group" role="group" aria-label="downloadandcreate">
+									<a href="https://getbukkit.org/get/d8321edc9470e56b8ad5c67bbd16beba25843336"
+										class="btn btn-download" id="downloadr"><i class="fa fa-download fa-fw"
+											aria-hidden="true"></i> Download</a>
+									<a href="https://ramshard.com/aff.php?aff=406" class="btn btn-create"><i
+											class="fa fa-plus fa-fw" aria-hidden="true"></i> Create a Server</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+				<div class="limit">
+					<a href="https://ramshard.com/aff.php?aff=405"><img
+							src="https://getbukkit.org/assets/img/Ramshardv2.gif" class="img-center img-responsive"></a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="discord">
+		<div class="container">
+			<div class="row">
+				<a href="https://discord.gg/getbukkit">
+					<div class="col-md-6">
+						<img src="https://getbukkit.org//assets/img/discord.svg" alt="Discord Partner"
+							style="height: 120px;" class="img-center img-responsive">
+					</div>
+					<div class="col-md-6">
+						<h1>Join us Now</h1>
+					</div>
+				</a>
+			</div>
+		</div>
+	</div>
+	<footer id="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3 ">
+					<img src="https://getbukkit.org/assets/img/getbukkit.png" alt="GetBukkit Logo"
+						class="img-center img-responsive logo">
+				</div>
+				<div class="col-md-2">
+					<h3>Downloads</h3>
+					<ul>
+						<li><a href="https://getbukkit.org/download/vanilla">Vanilla</a></li>
+						<li><a href="https://getbukkit.org/download/spigot">Spigot</a></li>
+						<li><a href="https://getbukkit.org/download/craftbukkit">Craftbukkit</a></li>
+					</ul>
+				</div>
+				<div class="col-md-2">
+					<h3>Company</h3>
+					<ul>
+						<li><a href="https://getbukkit.org/about-us">About Us</a></li>
+						<li><a href="https://getbukkit.org/blog">Blog</a></li>
+						<li><a href="https://getbukkit.org/branding">Branding</a></li>
+						<li><a href="https://getbukkit.org/partners">Partners</a></li>
+					</ul>
+				</div>
+				<div class="col-md-2">
+					<h3>Client</h3>
+					<ul>
+						<li><a href="https://getbukkit.org/pricing">Pricing</a></li>
+						<li><a href="https://getbukkit.org/pricing/premium">Premium</a></li>
+						<li><a href="https://getbukkit.org/sign-in">Sign in</a></li>
+						<li><a href="https://getbukkit.org/contact">Contact us</a></li>
+					</ul>
+				</div>
+				<div class="col-md-2">
+					<h3>Other</h3>
+					<ul>
+						<li><a href="https://getbukkit.org/pricing">API</a></li>
+						<li><a href="https://getbukkit.org/news">News</a></li>
+						<li><a href="https://status.getbukkit.org">Status</a></li>
+						<li><a href="https://getbukkit.org/leaderboard">Discord Leaderboard</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<p>Copyright &copy; 2021 GetBukkit All Rights Reserved.</p>
+					<a href="https://getbukkit.org/terms-of-service">Terms of Service</a> | <a
+						href="https://getbukkit.org/privacy-policy">Privacy Policy</a> | Developed by <a
+						href="https://rexsdev.com">Rexs Development</a></p>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"
+		integrity="sha256-wNQJi8izTG+Ho9dyOYiugSFKU6C7Sh1NNqZ2QPmO0Hk=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"
+		integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.3/toastr.min.js"
+		integrity="sha256-yNbKY1y6h2rbVcQtf0b8lq4a+xpktyFc3pSYoGAY1qQ=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/simplemde/1.11.2/simplemde.min.js"
+		integrity="sha256-6sZs7OGP0Uzcl7UDsLaNsy1K0KTZx1+6yEVrRJMn2IM=" crossorigin="anonymous"></script>
+	<script src='https://www.google.com/recaptcha/api.js'></script>
+	<script src="https://getbukkit.org/assets/js/getbukkit.js"></script>
+	<script>
+		(function (i, s, o, g, r, a, m) { i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () { (i[r].q = i[r].q || []).push(arguments) }, i[r].l = 1 * new Date(); a = s.createElement(o), m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m) })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+		ga('create', 'UA-75573601-1', 'auto');
+		ga('send', 'pageview');
+	</script>
+</body>
+
+</html>
