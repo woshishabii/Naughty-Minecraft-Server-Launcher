@@ -56,7 +56,7 @@ class LinkHandler():
         for temp in self.soups['spigot'].find_all('h3'):
             temp = str(temp)[4:-5]
             # print(temp)
-            if re.match(r'^[0-9][0-9].[0-9] MB$', temp, re.I|re.M) or re.match(r'^[0-9][0-9].[0-9][0-9] MB$', temp, re.I|re.M) or re.match(r'^[0-9][0-9].[0-9][0-9]$'):
+            if re.match(r'^[0-9][0-9].[0-9] MB$', temp, re.I|re.M) or re.match(r'^[0-9][0-9].[0-9][0-9] MB$', temp, re.I|re.M) or re.match(r'^[0-9][0-9].[0-9][0-9]$', temp, re.I|re.M):
                 self.sizes['spigot'].append(temp)
             else:
                 for weekday in self.weekdays:
@@ -67,12 +67,15 @@ class LinkHandler():
             if temp.get('href').startswith('https://getbukkit.org/get/'):
                 self.links['spigot'].append(temp.get('href'))
 
+
+'''
 test = LinkHandler()
-test.resolveVanillaLinks()
+test.resolveSpigotLinks()
 
 # print(test.versions)
 print(test.sizes)
 # print(test.links)
+'''
 
 ''' 测试程序
 test = LinkHandler()
