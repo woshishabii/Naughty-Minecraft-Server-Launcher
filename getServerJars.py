@@ -1,5 +1,8 @@
 # By. woshishabi
 
+import os
+import pathlib
+
 import requests
 from bs4 import BeautifulSoup
 import re
@@ -19,6 +22,8 @@ class LinkHandler():
         self.pagelink = {}
         self.links = {}
         self.weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+
+        self.download_path = '.server'
 
         self.resolveVanillaLinks()
         self.resolveSpigotLinks()
@@ -114,26 +119,46 @@ class LinkHandler():
         self.release_date['craftbukkit'] = dict(zip(self.versions['craftbukkit'], self.release_date_temp))
         self.links['craftbukkit'] = dict(zip(self.versions['craftbukkit'], self.links_temp))
 
-    def downloadVersion(self, edition, version):
-        pass
+    def downloadVersion(self, edition, version, server_name=None):
+        if os.path.exists(self.download_path):
+            pass
+        else:
+            os.mkdir(self.download_path)
+        if server_name:
+            os.mkdir(f'{self.download_path}/{server_name}')
+        else:
+            os.mkdir(f'{self.download_path}/{edition}_{version}')
+        
 
-''' 测试程序
+
+
+
+
+
+
+
+'''
 test = LinkHandler()
+'''
 
+'''
 # print(test.versions)
 # print(test.sizes)
 # print(test.release_date)
 # print(test.links)
+'''
 
+'''
 with open('versions.py', mode='w') as f:
     f.write(str(test.versions))
-
 with open('sizes.py', mode='w') as f:
     f.write(str(test.sizes))
-
 with open('release_date.py', mode='w') as f:
     f.write(str(test.release_date))
-
 with open('links.py', mode='w') as f:
     f.write(str(test.links))
+'''
+
+'''
+test.downloadVersion('vanilla', '1.17.1')
 '''
