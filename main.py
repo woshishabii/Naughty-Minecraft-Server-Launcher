@@ -5,6 +5,7 @@ import os
 import requests
 from bs4 import BeautifulSoup
 import re
+
 import easygui
 
 class ServerLauncherSettings():
@@ -56,7 +57,10 @@ class Server():
                 if chunk:
                     jar.write(chunk)
     def start(self):
-        pass
+        working_dir = os.getcwd()
+        os.chdir(self.server_path)
+        os.system(f'java -Xmx2G -jar {self.name}.jar')
+        os.chdir(working_dir)
 
 class LinkHandler():
     def __init__(self, sl_settings):
@@ -184,5 +188,17 @@ class LinkHandler():
         self.release_date['craftbukkit'] = dict(zip(self.versions['craftbukkit'], self.release_date_temp))
         self.getbukkit_links['craftbukkit'] = dict(zip(self.versions['craftbukkit'], self.getbukkit_links_temp))
 
+class ServerLauncherGUI():
+    def __init__(self):
+        self.on_start()
+    def on_start(self):
+        easygui.msgbox(msg='\t\t\t\t我的世界开服工具\n\t\t\t\tBy. woshishabi', 
+                        title='我的世界开服工具  By. woshishabi', ok_button='开始')
+    def on_choice(self):
+        pass
+    
 if __name__ == '__main__':
-    pass
+    sl_settings = ServerLauncherSettings()
+    root = ServerLauncherGUI()
+    test = Server('vanilla', '1.17.1', sl_settings)
+    test.start()
