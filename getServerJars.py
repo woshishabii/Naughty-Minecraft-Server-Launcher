@@ -19,7 +19,6 @@ class LinkHandler():
         self.versions = {}
         self.sizes = {}
         self.release_date = {}
-        self.pagelink = {}
         self.links = {}
         self.weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
@@ -120,22 +119,49 @@ class LinkHandler():
         self.links['craftbukkit'] = dict(zip(self.versions['craftbukkit'], self.links_temp))
 
     def downloadVersion(self, edition, version, server_name=None):
+        '''
         if os.path.exists(self.download_path):
             pass
         else:
             os.mkdir(self.download_path)
         if server_name:
-            os.mkdir(f'{self.download_path}/{server_name}')
+            server_path = f'{self.download_path}/{server_name}'
         else:
-            os.mkdir(f'{self.download_path}/{edition}_{version}')
+            server_path = f'{self.download_path}/{edition}_{version}'
+        if not os.path.exists(server_path):
+            os.mkdir(server_path)
+        '''
         
+        if os.path.exists(self.download_path):
+            pass
+        else:
+            os.mkdir(self.download_path)
+        
+        if server_name:
+            self.server_name = server_name
+        else:
+            self.server_name = f'{edition}-{version}'
+        
+        self.server_path = f'{self.download_path}/{self.server_name}'
+        
+        if os.path.exists(self.server_path):
+            pass
+        else:
+            os.mkdir(self.server_path)
 
-
-
-
-
-
-
+        # 通过getbukkit网页获取Mojang下载链接
+        self.page_request = requests.get(self.links[edition][version])
+        print(f"[LOG] Getting getbukkit redirect link status code : {self.page_request.status_code}")
+        self.page_soup = BeautifulSoup(self.page_request.text, 'html.parser')
+        for temp_link in self.page_soup.find_all('a'):
+            if temp_link.get('href').startswith('https://launcher.mojang.com/v1/objects/'):
+                self.jar_link = temp_link.get('href')
+                # print(self.jar_link)
+        self.jar_request = requests.get(self.jar_link, stream=True)
+        with open(f'{self.server_path}/{self.server_name}.jar', mode='wb') as jar:
+            for chunk in self.jar_request.iter_content(chunk_size=1024):
+                if chunk:
+                    jar.write(chunk)
 
 '''
 test = LinkHandler()
