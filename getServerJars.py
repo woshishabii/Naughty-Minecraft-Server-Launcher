@@ -158,6 +158,8 @@ class LinkHandler():
                 self.jar_link = temp_link.get('href')
                 # print(self.jar_link)
         self.jar_request = requests.get(self.jar_link, stream=True)
+        print(f'[LOG] Mojang website status code {self.jar_request.status_code}')
+        print('[LOG] Download Started')
         with open(f'{self.server_path}/{self.server_name}.jar', mode='wb') as jar:
             for chunk in self.jar_request.iter_content(chunk_size=1024):
                 if chunk:

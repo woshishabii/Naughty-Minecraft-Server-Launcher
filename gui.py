@@ -1,7 +1,7 @@
 import easygui
-import easygui
 
 class ServerLauncherGUI():
+    ''' 这个类目前只是占位用的，不代表最终效果 '''
     def __init__(self):
         self.onStart()
     def onStart(self):
