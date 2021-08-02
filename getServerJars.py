@@ -33,21 +33,26 @@ class LinkHandler():
         self.versions['vanilla'] = []
         for temp in self.soups['vanilla'].find_all('h2'):
             self.versions['vanilla'].append(str(temp)[4:-5])
-        self.sizes['vanilla'] = []
-        self.release_date['vanilla'] = []
+        self.sizes_temp = []
+        self.release_date_temp = []
         for temp in self.soups['vanilla'].find_all('h3'):
             temp = str(temp)[4:-5]
             # print(temp)
             if re.match(r'^[0-9][0-9].[0-9] MB$', temp, re.I|re.M) or re.match(r'^[0-9].[0-9] MB$', temp, re.I|re.M) or re.match(r'^[0-9][0-9].[0-9][0-9] MB$', temp, re.I|re.M) or re.match(r'^[0-9].[0-9][0-9] MB$', temp, re.I|re.M):
-                self.sizes['vanilla'].append(temp)
+                self.sizes_temp.append(temp)
             else:
                 for weekday in self.weekdays:
                     if weekday in temp:
-                        self.release_date['vanilla'].append(temp)
-        self.links['vanilla'] = []
+                        self.release_date_temp.append(temp)
+        self.links_temp = []
         for temp in self.soups['vanilla'].find_all('a'):
             if temp.get('href').startswith('https://getbukkit.org/get/'):
-                self.links['vanilla'].append(temp.get('href'))
+                self.links_temp.append(temp.get('href'))
+        
+        # 将数据与版本合并
+        self.sizes['vanilla'] = dict(zip(self.versions['vanilla'], self.sizes_temp))
+        self.release_date['vanilla'] = dict(zip(self.versions['vanilla'], self.release_date_temp))
+        self.links['vanilla'] = dict(zip(self.versions['vanilla'], self.links_temp))
 
     def resolveSpigotLinks(self):
         # Get data of the getbukkit website and instance it into a BeautifulSoup object
@@ -58,21 +63,26 @@ class LinkHandler():
         self.versions['spigot'] = []
         for temp in self.soups['spigot'].find_all('h2'):
             self.versions['spigot'].append(str(temp)[4:-5])
-        self.sizes['spigot'] = []
-        self.release_date['spigot'] = []
+        self.sizes_temp = []
+        self.release_date_temp = []
         for temp in self.soups['spigot'].find_all('h3'):
             temp = str(temp)[4:-5]
             # print(temp)
             if re.match(r'^[0-9][0-9].[0-9] MB$', temp, re.I|re.M) or re.match(r'^[0-9][0-9].[0-9][0-9] MB$', temp, re.I|re.M) or re.match(r'^[0-9][0-9].[0-9][0-9]$', temp, re.I|re.M):
-                self.sizes['spigot'].append(temp)
+                self.sizes_temp.append(temp)
             else:
                 for weekday in self.weekdays:
                     if weekday in temp:
-                        self.release_date['spigot'].append(temp)
-        self.links['spigot'] = []
+                        self.release_date_temp.append(temp)
+        self.links_temp = []
         for temp in self.soups['spigot'].find_all('a'):
             if temp.get('href').startswith('https://getbukkit.org/get/'):
-                self.links['spigot'].append(temp.get('href'))
+                self.links_temp.append(temp.get('href'))
+        
+        # 合并数据
+        self.sizes['spigot'] = dict(zip(self.versions['spigot'], self.sizes_temp))
+        self.release_date['spigot'] = dict(zip(self.versions['spigot'], self.release_date_temp))
+        self.links['spigot'] = dict(zip(self.versions['spigot'], self.links_temp))
 
     def resolveCraftBukkitLinks(self):
         # Get data of the getbukkit website and instance it into a BeautifulSoup object
@@ -83,22 +93,29 @@ class LinkHandler():
         self.versions['craftbukkit'] = []
         for temp in self.soups['craftbukkit'].find_all('h2'):
             self.versions['craftbukkit'].append(str(temp)[4:-5])
-        self.sizes['craftbukkit'] = []
-        self.release_date['craftbukkit'] = []
+        self.sizes_temp = []
+        self.release_date_temp = []
         for temp in self.soups['craftbukkit'].find_all('h3'):
             temp = str(temp)[4:-5]
             # print(temp)
             if re.match(r'^[0-9][0-9].[0-9] MB$', temp, re.I|re.M) or re.match(r'^[0-9][0-9].[0-9][0-9] MB$', temp, re.I|re.M) or re.match(r'^[0-9].[0-9][0-9] MB$', temp, re.I|re.M):
-                self.sizes['craftbukkit'].append(temp)
+                self.sizes_temp.append(temp)
             else:
                 for weekday in self.weekdays:
                     if weekday in temp:
-                        self.release_date['craftbukkit'].append(temp)
-        self.links['craftbukkit'] = []
+                        self.release_date_temp.append(temp)
+        self.links_temp = []
         for temp in self.soups['craftbukkit'].find_all('a'):
             if temp.get('href').startswith('https://getbukkit.org/get/'):
-                self.links['craftbukkit'].append(temp.get('href'))
+                self.links_temp.append(temp.get('href'))
+        
+        # 合并数据
+        self.sizes['craftbukkit'] = dict(zip(self.versions['craftbukkit'], self.sizes_temp))
+        self.release_date['craftbukkit'] = dict(zip(self.versions['craftbukkit'], self.release_date_temp))
+        self.links['craftbukkit'] = dict(zip(self.versions['craftbukkit'], self.links_temp))
 
+    def downloadVersion(self, edition, version):
+        pass
 
 ''' 测试程序
 test = LinkHandler()
