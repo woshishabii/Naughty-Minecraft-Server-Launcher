@@ -67,19 +67,19 @@ class LinkHandler():
             if temp.get('href').startswith('https://getbukkit.org/get/'):
                 self.links['spigot'].append(temp.get('href'))
 
-
-'''
-test = LinkHandler()
-test.resolveSpigotLinks()
-
-# print(test.versions)
-print(test.sizes)
-# print(test.links)
-'''
-
 ''' 测试程序
 test = LinkHandler()
 test.resolveVanillaLinks()
+test.resolveSpigotLinks
+
+# print(test.versions)
+# print(test.sizes)
+# print(test.release_date)
+# print(test.links)
+
+test = LinkHandler()
+test.resolveVanillaLinks()
+test.resolveSpigotLinks()
 
 with open('versions.json', mode='w') as f:
     f.write(str(test.versions))
