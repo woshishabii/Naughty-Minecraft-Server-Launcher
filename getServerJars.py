@@ -9,6 +9,7 @@ class LinkHandler():
         self.source = {
             'vanilla':'https://getbukkit.org/download/vanilla',
             'spigot':'https://getbukkit.org/download/spigot',
+            'craftbukkit':'https://getbukkit.org/download/craftbukkit',
         }
         self.data = {}
         self.soups = {}
@@ -18,10 +19,15 @@ class LinkHandler():
         self.pagelink = {}
         self.links = {}
         self.weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+
+        self.resolveVanillaLinks()
+        self.resolveSpigotLinks()
+        self.resolveCraftBukkitLinks()
     
     def resolveVanillaLinks(self):
         # Get data of the getbukkit website and instance it into a BeautifulSoup object
         self.data['vanilla'] = requests.get(self.source['vanilla'])
+        print(f"[LOG] Vanilla status code {self.data['vanilla'].status_code}")
         self.soups['vanilla'] = BeautifulSoup(self.data['vanilla'].text, 'html.parser')
         # Get version list
         self.versions['vanilla'] = []
@@ -46,6 +52,7 @@ class LinkHandler():
     def resolveSpigotLinks(self):
         # Get data of the getbukkit website and instance it into a BeautifulSoup object
         self.data['spigot'] = requests.get(self.source['spigot'])
+        print(f"[LOG] Spigot status code {self.data['spigot'].status_code}")
         self.soups['spigot'] = BeautifulSoup(self.data['spigot'].text, 'html.parser')
         # Get version list
         self.versions['spigot'] = []
@@ -67,29 +74,49 @@ class LinkHandler():
             if temp.get('href').startswith('https://getbukkit.org/get/'):
                 self.links['spigot'].append(temp.get('href'))
 
+    def resolveCraftBukkitLinks(self):
+        # Get data of the getbukkit website and instance it into a BeautifulSoup object
+        self.data['craftbukkit'] = requests.get(self.source['craftbukkit'])
+        print(f"[LOG] CraftBukkit status code : {self.data['craftbukkit'].status_code}")
+        self.soups['craftbukkit'] = BeautifulSoup(self.data['craftbukkit'].text, 'html.parser')
+        # Get version list
+        self.versions['craftbukkit'] = []
+        for temp in self.soups['craftbukkit'].find_all('h2'):
+            self.versions['craftbukkit'].append(str(temp)[4:-5])
+        self.sizes['craftbukkit'] = []
+        self.release_date['craftbukkit'] = []
+        for temp in self.soups['craftbukkit'].find_all('h3'):
+            temp = str(temp)[4:-5]
+            # print(temp)
+            if re.match(r'^[0-9][0-9].[0-9] MB$', temp, re.I|re.M) or re.match(r'^[0-9][0-9].[0-9][0-9] MB$', temp, re.I|re.M) or re.match(r'^[0-9].[0-9][0-9] MB$', temp, re.I|re.M):
+                self.sizes['craftbukkit'].append(temp)
+            else:
+                for weekday in self.weekdays:
+                    if weekday in temp:
+                        self.release_date['craftbukkit'].append(temp)
+        self.links['craftbukkit'] = []
+        for temp in self.soups['craftbukkit'].find_all('a'):
+            if temp.get('href').startswith('https://getbukkit.org/get/'):
+                self.links['craftbukkit'].append(temp.get('href'))
+
+
 ''' 测试程序
 test = LinkHandler()
-test.resolveVanillaLinks()
-test.resolveSpigotLinks
 
 # print(test.versions)
 # print(test.sizes)
 # print(test.release_date)
 # print(test.links)
 
-test = LinkHandler()
-test.resolveVanillaLinks()
-test.resolveSpigotLinks()
-
-with open('versions.json', mode='w') as f:
+with open('versions.py', mode='w') as f:
     f.write(str(test.versions))
 
-with open('sizes.json', mode='w') as f:
+with open('sizes.py', mode='w') as f:
     f.write(str(test.sizes))
 
-with open('release_date.json', mode='w') as f:
+with open('release_date.py', mode='w') as f:
     f.write(str(test.release_date))
 
-with open('links.json', mode='w') as f:
+with open('links.py', mode='w') as f:
     f.write(str(test.links))
 '''
