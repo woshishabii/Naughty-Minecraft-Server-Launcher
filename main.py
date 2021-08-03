@@ -290,6 +290,26 @@ class ServerLauncherGUI():
                 self.version_choice = easygui.choicebox(msg='请选择服务端版本', title=self.sl_settings.title, 
                                                     choices=list(self.versions_info.keys()), preselect=0)
                 print(self.version_choice)
+            self.server_name = easygui.enterbox(msg='请输入新配置的名称', title='创建新配置', default=f'{self.edition_choice}-{self.versions_info[self.version_choice]}')
+            os.mkdir(f'{self.sl_settings.versions_path}/{self.server_name}')
+            easygui.msgbox(msg='即将开始下载', title=self.sl_settings.title, ok_button='开始')
+            self.getbukkit_request = requests.get(self.linkhandler.getbukkit_links[self.edition_choice][self.versions_info[self.version_choice]])
+            # print(self.linkhandler.getbukkit_links[self.edition_choice][self.versions_info[self.version_choice]])
+            self.getbukkit_soup = BeautifulSoup(self.getbukkit_request.text, 'html.parser')
+            for temp in self.getbukkit_soup.find_all('a'):
+                if temp.get('href').startswith('https://launcher.mojang.com/v1/objects/') or temp.get('href').startswith('https://download.getbukkit.org/spigot/') or temp.get('href').startswith('https://download.getbukkit.org/craftbukkit/'):
+                    self.download_request = requests.get(temp.get('href'), stream=True)
+                    break
+            with open(f'{self.sl_settings.versions_path}/{self.server_name}/{self.server_name}.jar', mode='wb') as jar:
+                for chunk in self.download_request.iter_content(chunk_size=1024):
+                    if chunk:
+                        jar.write(chunk)
+            '''
+            except:
+                easygui.ynbox(msg=f'指定的版本名称已存在，请重新命名\n如果你确定没有创建此版本，请删除{self.sl_settings.versions_path}/{self.server_name}', 
+                            title='指定版本名称已存在', 
+                            choices=('[<Y>] 确定', '[<C>] 取消'), cancel_choice='[<C>] 取消')
+            '''
         else:
             pass
 
