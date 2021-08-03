@@ -1,5 +1,6 @@
 # By. woshishabi
 
+'''
 import os
 
 import requests
@@ -10,6 +11,10 @@ import easygui
 
 class ServerLauncherSettings():
     def __init__(self):
+        # 项目信息 / Project Infomation
+        self.name = '我的世界开服工具'
+        self.author = 'woshishabi'
+        self.version = '0.0.1.'
         # 版本设置 / Version Settings
         self.server_dir = '.server'
         # 源设置 / Source Settings
@@ -18,6 +23,8 @@ class ServerLauncherSettings():
             'spigot':'https://getbukkit.org/download/spigot',
             'craftbukkit':'https://getbukkit.org/download/craftbukkit',
         }
+        # GUI设置 / GUI Settings
+        self.gui_title = f'{self.name}  By. {self.name}'
 
 class Server():
     def __init__(self, edition, version, sl_settings, name=None):
@@ -62,6 +69,50 @@ class Server():
         os.system(f'java -Xmx2G -jar {self.name}.jar nogui')
         os.chdir(working_dir)
 
+class ServerLauncherGUI():
+    def __init__(self, sl_settings):
+        self.sl_settings = sl_settings
+    def startup(self):
+        # 欢迎页 / Welcome Page
+        easygui.msgbox(msg='\t\t\t欢迎使用我的世界开服工具\n\t\t\tBy. woshishabi', title=self.sl_settings.gui_title, ok_button='开始')
+    def choose_function(self):
+        # 选择功能 / Choose Function
+        self.choice = easygui.choicebox(msg='首页', title=self.sl_settings.gui_title, choices=[])
+
+if __name__ == '__main__':
+    sl_settings = ServerLauncherSettings()
+    root = ServerLauncherGUI()
+    test = Server('vanilla', '1.17.1', sl_settings)
+    test.start()
+'''
+
+import os
+import sys
+
+import easygui
+
+import requests
+from bs4 import BeautifulSoup
+
+import re
+
+class ServerLauncherSettings():
+    def __init__(self):
+        # 项目信息 / Project Infomation
+        self.version = '0.0.1 alpha'
+        self.name = '我的世界服务器工具'
+        self.author = 'woshishabi'
+        # 用户界面设置 / GUI settings
+        self.title = f'{self.name} {self.version}'
+        # 默认版本设置 / Default Versions Settings
+        self.versions_path = '.server'
+        # 设置下载源 / Download Source
+        self.source = {
+            'vanilla':'https://getbukkit.org/download/vanilla',
+            'spigot':'https://getbukkit.org/download/spigot',
+            'craftbukkit':'https://getbukkit.org/download/craftbukkit',
+        }
+
 class LinkHandler():
     def __init__(self, sl_settings):
         self.sl_settings = sl_settings
@@ -88,7 +139,7 @@ class LinkHandler():
         self.release_date_temp = []
         for temp in self.soups['vanilla'].find_all('h3'):
             # 去除HTML标签
-            temp = str(temp[4:-5])
+            temp = str(temp)[4:-5]
             # print(temp)
             # 正则表达式匹配大小
             if (re.match(r'^[0-9].[0-9] MB$', temp, re.I|re.M) 
@@ -127,7 +178,7 @@ class LinkHandler():
         self.release_date_temp = []
         for temp in self.soups['spigot'].find_all('h3'):
             # 去除HTML标签
-            temp = str(temp[4:-5])
+            temp = str(temp)[4:-5]
             # print(temp)
             # 正则表达式匹配大小
             if (re.match(r'^[0-9][0-9].[0-9] MB$', temp, re.I|re.M) 
@@ -155,9 +206,9 @@ class LinkHandler():
         self.getbukkit_requests['craftbukkit'] = requests.get(self.sl_settings.source['craftbukkit'])
         print(f'[LOG] Getting getbukkit data of CraftBukkit, status code: {self.getbukkit_requests["craftbukkit"].status_code}')
         # BeautifulSoup 解析
-        self.soups['craftbukkit'] = BeautifulSoup(self.getbukkit_requests['rcaftbukkit'].text, 'html.parser')
+        self.soups['craftbukkit'] = BeautifulSoup(self.getbukkit_requests['craftbukkit'].text, 'html.parser')
         # 获取版本列表
-        self.versions['craftbkkit'] = []
+        self.versions['craftbukkit'] = []
         for temp in self.soups['craftbukkit'].find_all('h2'):
             self.versions['craftbukkit'].append(str(temp)[4:-5])
         # 获取服务端文件大小、发布日期
@@ -165,7 +216,7 @@ class LinkHandler():
         self.release_date_temp = []
         for temp in self.soups['craftbukkit'].find_all('h3'):
             # 去除HTML标签
-            temp = str(temp[4:-5])
+            temp = str(temp)[4:-5]
             # print(temp)
             # 正则表达式匹配大小
             if (re.match(r'^[0-9].[0-9][0-9] MB$', temp, re.I|re.M) 
@@ -189,11 +240,65 @@ class LinkHandler():
         self.getbukkit_links['craftbukkit'] = dict(zip(self.versions['craftbukkit'], self.getbukkit_links_temp))
 
 class ServerLauncherGUI():
-    def __init__(self):
-        pass
+    def __init__(self, sl_settings):
+        self.sl_settings = sl_settings
+        self.got_link = False
+    def osnstart(self):
+        if not os.path.exists(self.sl_settings.versions_path):
+            os.mkdir(self.sl_settings.versions_path)
+            easygui.msgbox(msg='\t\t\t欢迎使用我的世界服务器工具\n\t\t\tBy. woshishabi', title=self.sl_settings.title, ok_button='开始使用！')
+    def choose_function(self):
+        self.choice = easygui.choicebox(msg='选择操作', title=self.sl_settings.title, choices=['下载服务端', '尚未完工'], preselect=0)
+        print(self.choice)
+        if self.choice == '下载服务端':
+            self.downloadVersion()
+        elif self.choice == '尚未完工':
+            easygui.msgbox(msg='这个项目还没有完成')
+        elif self.choice == None:
+            sys.exit()
+    def downloadVersion(self):
+        if not self.got_link:
+            self.linkhandler = LinkHandler(self.sl_settings)
+            self.linkhandler.resolveVanilla()
+            self.linkhandler.resolveSpigot()
+            self.linkhandler.resolveCraftBukkit()
+            self.got_link = True
 
-if __name__ == '__main__':
+        self.editions = list(self.linkhandler.versions.keys())
+
+        self.edition_choice = easygui.choicebox(msg='选择服务端类型', title=self.sl_settings.title,
+                                                choices=self.editions, preselect=0)
+        if self.edition_choice:
+            if self.edition_choice == 'vanilla':
+                self.versions_info = {}
+                for version in self.linkhandler.versions['vanilla']:
+                    self.versions_info[f'{version} - {self.linkhandler.sizes["vanilla"][version]} - {self.linkhandler.release_date["vanilla"][version]}'] = version
+                self.version_choice = easygui.choicebox(msg='请选择服务端版本', title=self.sl_settings.title, 
+                                                        choices=list(self.versions_info.keys()), preselect=0)
+                print(self.version_choice)
+            elif self.edition_choice == 'spigot':
+                self.versions_info = {}
+                for version in self.linkhandler.versions['spigot']:
+                    self.versions_info[f'{version} - {self.linkhandler.sizes["spigot"][version]} - {self.linkhandler.release_date["spigot"][version]}'] = version
+                self.version_choice = easygui.choicebox(msg='请选择服务端版本', title=self.sl_settings.title, 
+                                                        choices=list(self.versions_info.keys()), preselect=0)
+                print(self.version_choice)
+            elif self.edition_choice == 'craftbukkit':
+                self.versions_info = {}
+                for version in self.linkhandler.versions['craftbukkit']:
+                    self.versions_info[f'{version} - {self.linkhandler.sizes["craftbukkit"][version]} - {self.linkhandler.release_date["craftbukkit"][version]}'] = version
+                self.version_choice = easygui.choicebox(msg='请选择服务端版本', title=self.sl_settings.title, 
+                                                    choices=list(self.versions_info.keys()), preselect=0)
+                print(self.version_choice)
+        else:
+            pass
+
+def test():
     sl_settings = ServerLauncherSettings()
-    root = ServerLauncherGUI()
-    test = Server('vanilla', '1.17.1', sl_settings)
-    test.start()
+    sl_gui = ServerLauncherGUI(sl_settings)
+
+    sl_gui.osnstart()
+    while True:
+        sl_gui.choose_function()
+
+test()
