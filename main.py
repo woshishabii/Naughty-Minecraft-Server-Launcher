@@ -1,91 +1,5 @@
 # By. woshishabi
 
-'''
-import os
-
-import requests
-from bs4 import BeautifulSoup
-import re
-
-import easygui
-
-class ServerLauncherSettings():
-    def __init__(self):
-        # 项目信息 / Project Infomation
-        self.name = '我的世界开服工具'
-        self.author = 'woshishabi'
-        self.version = '0.0.1.'
-        # 版本设置 / Version Settings
-        self.server_dir = '.server'
-        # 源设置 / Source Settings
-        self.source = {
-            'vanilla':'https://getbukkit.org/download/vanilla',
-            'spigot':'https://getbukkit.org/download/spigot',
-            'craftbukkit':'https://getbukkit.org/download/craftbukkit',
-        }
-        # GUI设置 / GUI Settings
-        self.gui_title = f'{self.name}  By. {self.name}'
-
-class Server():
-    def __init__(self, edition, version, sl_settings, name=None):
-        # 检测是否给出服务器配置名称
-        # 如果未给出则根据服务端类型、版本创建一个名字
-        if name:
-            self.name = name
-        else:
-            self.name = f'{edition}-{version}'
-
-        self.edition = edition
-        self.version = version
-        self.sl_settings = sl_settings
-        
-        self.server_path = f'{self.sl_settings.server_dir}/{self.name}'
-    def download(self, links):
-        # 检测是否存在存储目录，如果没有则创建
-        if os.path.exists(self.sl_settings.server_dir):
-            pass
-        else:
-            os.mkdir(self.sl_settings.server_dir)
-        # 创建配置目录
-        if not os.path.exists(self.sl_settings):
-            os.mkdir(self.server_path)
-        # 解析getbukkit信息网页获取下载链接
-        self.page_request = requests.get(links[self.edition][self.version])
-        print(f'[LOG] Getting getbukkit website, status code: {self.page_request.status_code}')
-        self.soup = BeautifulSoup(self.page_request.text, 'html.parser')
-        for a in self.soup.find_all('a'):
-            if a.get('href').startswith('https://launcher.mojang.com/v1/objects/'):
-                self.download_link = a.get('href')
-                # print(self.download_link)
-                break
-        self.file_request = requests.get(self.download_link, stream=True)
-        with open(f'{self.server_path}/{self.name}.jar', mode='wb') as jar:
-            for chunk in self.file_request.iter_content(chunk_size=2048):
-                if chunk:
-                    jar.write(chunk)
-    def start(self):
-        working_dir = os.getcwd()
-        os.chdir(self.server_path)
-        os.system(f'java -Xmx2G -jar {self.name}.jar nogui')
-        os.chdir(working_dir)
-
-class ServerLauncherGUI():
-    def __init__(self, sl_settings):
-        self.sl_settings = sl_settings
-    def startup(self):
-        # 欢迎页 / Welcome Page
-        easygui.msgbox(msg='\t\t\t欢迎使用我的世界开服工具\n\t\t\tBy. woshishabi', title=self.sl_settings.gui_title, ok_button='开始')
-    def choose_function(self):
-        # 选择功能 / Choose Function
-        self.choice = easygui.choicebox(msg='首页', title=self.sl_settings.gui_title, choices=[])
-
-if __name__ == '__main__':
-    sl_settings = ServerLauncherSettings()
-    root = ServerLauncherGUI()
-    test = Server('vanilla', '1.17.1', sl_settings)
-    test.start()
-'''
-
 import os
 import sys
 
@@ -93,6 +7,7 @@ import easygui
 
 import requests
 from bs4 import BeautifulSoup
+from lxml import etree
 
 import re
 
@@ -303,19 +218,28 @@ class ServerLauncherGUI():
             # print(self.linkhandler.getbukkit_links[self.edition_choice][self.versions_info[self.version_choice]])
             self.getbukkit_soup = BeautifulSoup(self.getbukkit_request.text, 'html.parser')
             for temp in self.getbukkit_soup.find_all('a'):
-                if temp.get('href').startswith('https://launcher.mojang.com/v1/objects/') or temp.get('href').startswith('https://download.getbukkit.org/spigot/') or temp.get('href').startswith('https://download.getbukkit.org/craftbukkit/'):
+                if (temp.get('href').startswith('https://launcher.mojang.com/v1/objects/') 
+                    or temp.get('href').startswith('https://download.getbukkit.org/spigot/') 
+                    or temp.get('href').startswith('https://download.getbukkit.org/craftbukkit/') 
+                    or temp.get('href').startswith('https://cdn.getbukkit.org/craftbukkit/') 
+                    or temp.get('href').startswith('https://cdn.getbukkit.org/spigot')):
                     self.download_request = requests.get(temp.get('href'), stream=True)
                     break
             with open(f'{self.sl_settings.versions_path}/{self.server_name}/{self.server_name}.jar', mode='wb') as jar:
                 for chunk in self.download_request.iter_content(chunk_size=1024):
                     if chunk:
                         jar.write(chunk)
-            '''
-            except:
-                
-            '''
         else:
-            pass
+            return
+        # TODO
+        self.eula_request = requests.get('https://account.mojang.com/documents/minecraft_eula')
+        self.eula_soup = BeautifulSoup(self.eula_request.text, 'html.parser')
+        for temp in self.eula_soup.find_all('div', class_='standalone'):
+            self.eula_pattern = re.compile(r'<[^>]+>', re.S)
+            self.eula_text = self.eula_pattern.sub('', str(temp))
+            break
+        self.agree_eula = easygui.ynbox(msg=self.eula_text, title='最终用户许可协议', choices=('[<A>] 同意', '[<D>] 不同意'), default_choice='[<D>] 不同意')
+        print(self.agree_eula)
 
 def test():
     sl_settings = ServerLauncherSettings()
