@@ -291,7 +291,13 @@ class ServerLauncherGUI():
                                                     choices=list(self.versions_info.keys()), preselect=0)
                 print(self.version_choice)
             self.server_name = easygui.enterbox(msg='请输入新配置的名称', title='创建新配置', default=f'{self.edition_choice}-{self.versions_info[self.version_choice]}')
-            os.mkdir(f'{self.sl_settings.versions_path}/{self.server_name}')
+            try:
+                os.mkdir(f'{self.sl_settings.versions_path}/{self.server_name}')
+            except:
+                easygui.ynbox(msg=f'指定的版本名称已存在，请重新命名\n如果你确定没有创建此版本，请删除{self.sl_settings.versions_path}/{self.server_name}', 
+                                title='指定版本名称已存在', 
+                                choices=('[<Y>] 确定', '[<C>] 取消'), cancel_choice='[<C>] 取消')
+                return
             easygui.msgbox(msg='即将开始下载', title=self.sl_settings.title, ok_button='开始')
             self.getbukkit_request = requests.get(self.linkhandler.getbukkit_links[self.edition_choice][self.versions_info[self.version_choice]])
             # print(self.linkhandler.getbukkit_links[self.edition_choice][self.versions_info[self.version_choice]])
@@ -306,9 +312,7 @@ class ServerLauncherGUI():
                         jar.write(chunk)
             '''
             except:
-                easygui.ynbox(msg=f'指定的版本名称已存在，请重新命名\n如果你确定没有创建此版本，请删除{self.sl_settings.versions_path}/{self.server_name}', 
-                            title='指定版本名称已存在', 
-                            choices=('[<Y>] 确定', '[<C>] 取消'), cancel_choice='[<C>] 取消')
+                
             '''
         else:
             pass
