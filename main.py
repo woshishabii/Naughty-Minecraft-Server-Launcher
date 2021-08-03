@@ -59,7 +59,7 @@ class Server():
     def start(self):
         working_dir = os.getcwd()
         os.chdir(self.server_path)
-        os.system(f'java -Xmx2G -jar {self.name}.jar')
+        os.system(f'java -Xmx2G -jar {self.name}.jar nogui')
         os.chdir(working_dir)
 
 class LinkHandler():
@@ -190,13 +190,8 @@ class LinkHandler():
 
 class ServerLauncherGUI():
     def __init__(self):
-        self.on_start()
-    def on_start(self):
-        easygui.msgbox(msg='\t\t\t\t我的世界开服工具\n\t\t\t\tBy. woshishabi', 
-                        title='我的世界开服工具  By. woshishabi', ok_button='开始')
-    def on_choice(self):
         pass
-    
+
 if __name__ == '__main__':
     sl_settings = ServerLauncherSettings()
     root = ServerLauncherGUI()
