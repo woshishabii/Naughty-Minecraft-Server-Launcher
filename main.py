@@ -1,5 +1,8 @@
 # By. woshishabi
 
+# 本程序基于bug运行，请勿瞎改
+# This program is based on bug, please do not change it without thinking
+
 import os
 import re
 import sys
@@ -156,14 +159,25 @@ class ServerLauncherGUI():
         self.sl_settings = sl_settings
         self.got_link = False
         self.versions = os.listdir(self.sl_settings.versions_path)
-        self.current_version = self.versions[0]
-        print(f'[LOG] Current Version {self.current_version}')
+        if len(self.versions):
+            self.current_version = self.versions[0]
+            print(f'[LOG] Current Version {self.current_version}')
+        else:
+            self.current_version = None
     def onSstart(self):
         if not os.path.exists(self.sl_settings.versions_path):
             os.mkdir(self.sl_settings.versions_path)
             easygui.msgbox(msg='\t\t\t欢迎使用我的世界服务器工具\n\t\t\tBy. woshishabi', title=self.sl_settings.title, ok_button='开始使用！')
     def choose_function(self):
-        self.choice = easygui.choicebox(msg='选择操作', title=self.sl_settings.title, choices=[f'当前选择的服务端: {self.current_version}', '下载服务端', '启动服务器', '尚未完工'], preselect=0)
+        self.function = []
+        if self.current_version == None:
+            self.function.append('未选择服务端')            
+        else:
+            self.function.append(f'当前选择的服务端: {self.current_version}')
+        self.function.append('下载服务端')
+        self.function.append('启动服务器')
+        self.function.append('尚未完工')
+        self.choice = easygui.choicebox(msg='选择操作', title=self.sl_settings.title, choices=self.function, preselect=0)
         print(self.choice)
         if self.choice == f'当前选择的服务端: {self.current_version}':
             self.chooseVersion()
