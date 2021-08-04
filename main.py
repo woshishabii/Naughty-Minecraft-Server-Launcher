@@ -215,6 +215,7 @@ class ServerLauncherGUI():
         self.server_name = easygui.enterbox(msg='请输入新配置的名称', title='创建新配置', default=f'{self.edition_choice}-{self.versions_info[self.version_choice]}')
         try:
             os.mkdir(f'{self.sl_settings.versions_path}/{self.server_name}')
+            os.mkdir(f'{self.sl_settings.versions_path}/{self.server_name}/server')
         except:
             easygui.ynbox(msg=f'指定的版本名称已存在，请重新命名\n如果你确定没有创建此版本，请删除{self.sl_settings.versions_path}/{self.server_name}', 
                         title='指定版本名称已存在', 
@@ -234,7 +235,7 @@ class ServerLauncherGUI():
                 self.download_request = requests.get(temp.get('href'), stream=True)
                 break
             # print(temp.get('href'))
-        with open(f'{self.sl_settings.versions_path}/{self.server_name}/{self.server_name}.jar', mode='wb') as jar:
+        with open(f'{self.sl_settings.versions_path}/{self.server_name}/server/{self.server_name}.jar', mode='wb') as jar:
             for chunk in self.download_request.iter_content(chunk_size=1024):
                 if chunk:
                     jar.write(chunk)
@@ -249,12 +250,12 @@ class ServerLauncherGUI():
             easygui.msgbox(msg='要运行服务端，您必须同意Mojang最终用户许可协议')
             self.agree_eula = easygui.ynbox(msg=self.eula_text, title='最终用户许可协议', choices=('[<A>] 同意', '[<D>] 不同意'), default_choice='[<D>] 不同意')
             print(self.agree_eula)
-        with open(f'{self.sl_settings.versions_path}/{self.server_name}/eula.txt', mode='w') as eula:
+        with open(f'{self.sl_settings.versions_path}/{self.server_name}/server/eula.txt', mode='w') as eula:
             eula.write('eula=true')
             self.current_version = self.server_name
     def runVersion(self, name):
         self.working_directory = os.getcwd()
-        os.chdir(f'{self.sl_settings.versions_path}/{name}')
+        os.chdir(f'{self.sl_settings.versions_path}/{name}/server')
         os.system(f'java -Xms1G -Xmx2G -jar {name}.jar nogui')
         os.chdir(self.working_directory)
     def chooseVersion(self):
@@ -265,6 +266,8 @@ class ServerLauncherGUI():
         choice = easygui.choicebox(msg='请选择已有的服务端版本', title='选择服务端', choices=temp, preselect=0)
         if choice:
             self.current_version = choice
+    def configVersion(self):
+        pass
 
 def test():
     sl_settings = ServerLauncherSettings()
