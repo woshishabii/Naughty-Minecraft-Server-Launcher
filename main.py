@@ -1,15 +1,12 @@
 # By. woshishabi
 
 import os
+import re
 import sys
 
 import easygui
-
 import requests
 from bs4 import BeautifulSoup
-from lxml import etree
-
-import re
 
 class ServerLauncherSettings():
     def __init__(self):
@@ -158,15 +155,22 @@ class ServerLauncherGUI():
     def __init__(self, sl_settings):
         self.sl_settings = sl_settings
         self.got_link = False
+        self.versions = os.listdir(self.sl_settings.versions_path)
+        self.current_version = self.versions[0]
+        print(f'[LOG] Current Version {self.current_version}')
     def osnstart(self):
         if not os.path.exists(self.sl_settings.versions_path):
             os.mkdir(self.sl_settings.versions_path)
             easygui.msgbox(msg='\t\t\t欢迎使用我的世界服务器工具\n\t\t\tBy. woshishabi', title=self.sl_settings.title, ok_button='开始使用！')
     def choose_function(self):
-        self.choice = easygui.choicebox(msg='选择操作', title=self.sl_settings.title, choices=['下载服务端', '尚未完工'], preselect=0)
+        self.choice = easygui.choicebox(msg='选择操作', title=self.sl_settings.title, choices=[f'当前选择的服务端: {self.current_version}', '下载服务端', '启动服务器', '尚未完工'], preselect=0)
         print(self.choice)
-        if self.choice == '下载服务端':
+        if self.choice == f'当前选择的服务端: {self.current_version}':
+            self.chooseVersion()
+        elif self.choice == '下载服务端':
             self.downloadVersion()
+        elif self.choice == '启动服务器':
+            self.runVersion(self.current_version)
         elif self.choice == '尚未完工':
             easygui.msgbox(msg='这个项目还没有完成')
         elif self.choice == None:
@@ -215,6 +219,7 @@ class ServerLauncherGUI():
                 or temp.get('href').startswith('https://launcher.mojang.com/mc/game/')):
                 self.download_request = requests.get(temp.get('href'), stream=True)
                 break
+            # print(temp.get('href'))
         with open(f'{self.sl_settings.versions_path}/{self.server_name}/{self.server_name}.jar', mode='wb') as jar:
             for chunk in self.download_request.iter_content(chunk_size=1024):
                 if chunk:
@@ -232,6 +237,20 @@ class ServerLauncherGUI():
             print(self.agree_eula)
         with open(f'{self.sl_settings.versions_path}/{self.server_name}/eula.txt', mode='w') as eula:
             eula.write('eula=true')
+            self.current_version = self.server_name
+    def runVersion(self, name):
+        self.working_directory = os.getcwd()
+        os.chdir(f'{self.sl_settings.versions_path}/{name}')
+        os.system(f'java -Xms1G -Xmx2G -jar {name}.jar nogui')
+        os.chdir(self.working_directory)
+    def chooseVersion(self):
+        temp = os.listdir(self.sl_settings.versions_path)
+        if len(temp) <= 2:
+            temp.append('')
+            temp.append('')
+        choice = easygui.choicebox(msg='请选择已有的服务端版本', title='选择服务端', choices=temp, preselect=0)
+        if choice:
+            self.current_version = choice
 
 def test():
     sl_settings = ServerLauncherSettings()
