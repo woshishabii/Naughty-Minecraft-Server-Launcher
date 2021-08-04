@@ -183,55 +183,42 @@ class ServerLauncherGUI():
 
         self.edition_choice = easygui.choicebox(msg='选择服务端类型', title=self.sl_settings.title,
                                                 choices=self.editions, preselect=0)
-        if self.edition_choice:
-            if self.edition_choice == 'vanilla':
-                self.versions_info = {}
-                for version in self.linkhandler.versions['vanilla']:
-                    self.versions_info[f'{version} - {self.linkhandler.sizes["vanilla"][version]} - {self.linkhandler.release_date["vanilla"][version]}'] = version
-                self.version_choice = easygui.choicebox(msg='请选择服务端版本', title=self.sl_settings.title, 
-                                                        choices=list(self.versions_info.keys()), preselect=0)
-                print(self.version_choice)
-            elif self.edition_choice == 'spigot':
-                self.versions_info = {}
-                for version in self.linkhandler.versions['spigot']:
-                    self.versions_info[f'{version} - {self.linkhandler.sizes["spigot"][version]} - {self.linkhandler.release_date["spigot"][version]}'] = version
-                self.version_choice = easygui.choicebox(msg='请选择服务端版本', title=self.sl_settings.title, 
-                                                        choices=list(self.versions_info.keys()), preselect=0)
-                print(self.version_choice)
-            elif self.edition_choice == 'craftbukkit':
-                self.versions_info = {}
-                for version in self.linkhandler.versions['craftbukkit']:
-                    self.versions_info[f'{version} - {self.linkhandler.sizes["craftbukkit"][version]} - {self.linkhandler.release_date["craftbukkit"][version]}'] = version
-                self.version_choice = easygui.choicebox(msg='请选择服务端版本', title=self.sl_settings.title, 
+        if self.edition_choice != None:
+            self.versions_info = {}
+            for version in self.linkhandler.versions[self.edition_choice]:
+                self.versions_info[f'{version} - {self.linkhandler.sizes[self.edition_choice][version]} - {self.linkhandler.release_date[self.edition_choice][version]}'] = version
+            self.version_choice = easygui.choicebox(msg='请选择服务端版本', title=self.sl_settings.title, 
                                                     choices=list(self.versions_info.keys()), preselect=0)
-                print(self.version_choice)
-            self.server_name = easygui.enterbox(msg='请输入新配置的名称', title='创建新配置', default=f'{self.edition_choice}-{self.versions_info[self.version_choice]}')
-            try:
-                os.mkdir(f'{self.sl_settings.versions_path}/{self.server_name}')
-            except:
-                easygui.ynbox(msg=f'指定的版本名称已存在，请重新命名\n如果你确定没有创建此版本，请删除{self.sl_settings.versions_path}/{self.server_name}', 
-                                title='指定版本名称已存在', 
-                                choices=('[<Y>] 确定', '[<C>] 取消'), cancel_choice='[<C>] 取消')
+            if not self.version_choice:
                 return
-            easygui.msgbox(msg='即将开始下载', title=self.sl_settings.title, ok_button='开始')
-            self.getbukkit_request = requests.get(self.linkhandler.getbukkit_links[self.edition_choice][self.versions_info[self.version_choice]])
-            # print(self.linkhandler.getbukkit_links[self.edition_choice][self.versions_info[self.version_choice]])
-            self.getbukkit_soup = BeautifulSoup(self.getbukkit_request.text, 'html.parser')
-            for temp in self.getbukkit_soup.find_all('a'):
-                if (temp.get('href').startswith('https://launcher.mojang.com/v1/objects/') 
-                    or temp.get('href').startswith('https://download.getbukkit.org/spigot/') 
-                    or temp.get('href').startswith('https://download.getbukkit.org/craftbukkit/') 
-                    or temp.get('href').startswith('https://cdn.getbukkit.org/craftbukkit/') 
-                    or temp.get('href').startswith('https://cdn.getbukkit.org/spigot')):
-                    self.download_request = requests.get(temp.get('href'), stream=True)
-                    break
-            with open(f'{self.sl_settings.versions_path}/{self.server_name}/{self.server_name}.jar', mode='wb') as jar:
-                for chunk in self.download_request.iter_content(chunk_size=1024):
-                    if chunk:
-                        jar.write(chunk)
+            print(self.version_choice)
         else:
             return
-        # TODO
+        self.server_name = easygui.enterbox(msg='请输入新配置的名称', title='创建新配置', default=f'{self.edition_choice}-{self.versions_info[self.version_choice]}')
+        try:
+            os.mkdir(f'{self.sl_settings.versions_path}/{self.server_name}')
+        except:
+            easygui.ynbox(msg=f'指定的版本名称已存在，请重新命名\n如果你确定没有创建此版本，请删除{self.sl_settings.versions_path}/{self.server_name}', 
+                        title='指定版本名称已存在', 
+                        choices=('[<Y>] 确定', '[<C>] 取消'), cancel_choice='[<C>] 取消')
+            return
+        easygui.msgbox(msg='即将开始下载', title=self.sl_settings.title, ok_button='开始')
+        self.getbukkit_request = requests.get(self.linkhandler.getbukkit_links[self.edition_choice][self.versions_info[self.version_choice]])
+        # print(self.linkhandler.getbukkit_links[self.edition_choice][self.versions_info[self.version_choice]])
+        self.getbukkit_soup = BeautifulSoup(self.getbukkit_request.text, 'html.parser')
+        for temp in self.getbukkit_soup.find_all('a'):
+            if (temp.get('href').startswith('https://launcher.mojang.com/v1/objects/') 
+                or temp.get('href').startswith('https://download.getbukkit.org/spigot/') 
+                or temp.get('href').startswith('https://download.getbukkit.org/craftbukkit/') 
+                or temp.get('href').startswith('https://cdn.getbukkit.org/craftbukkit/') 
+                or temp.get('href').startswith('https://cdn.getbukkit.org/spigot') 
+                or temp.get('href').startswith('https://launcher.mojang.com/mc/game/')):
+                self.download_request = requests.get(temp.get('href'), stream=True)
+                break
+        with open(f'{self.sl_settings.versions_path}/{self.server_name}/{self.server_name}.jar', mode='wb') as jar:
+            for chunk in self.download_request.iter_content(chunk_size=1024):
+                if chunk:
+                    jar.write(chunk)
         self.eula_request = requests.get('https://account.mojang.com/documents/minecraft_eula')
         self.eula_soup = BeautifulSoup(self.eula_request.text, 'html.parser')
         for temp in self.eula_soup.find_all('div', class_='standalone'):
@@ -239,7 +226,12 @@ class ServerLauncherGUI():
             self.eula_text = self.eula_pattern.sub('', str(temp))
             break
         self.agree_eula = easygui.ynbox(msg=self.eula_text, title='最终用户许可协议', choices=('[<A>] 同意', '[<D>] 不同意'), default_choice='[<D>] 不同意')
-        print(self.agree_eula)
+        while not self.agree_eula:
+            easygui.msgbox(msg='要运行服务端，您必须同意Mojang最终用户许可协议')
+            self.agree_eula = easygui.ynbox(msg=self.eula_text, title='最终用户许可协议', choices=('[<A>] 同意', '[<D>] 不同意'), default_choice='[<D>] 不同意')
+            print(self.agree_eula)
+        with open(f'{self.sl_settings.versions_path}/{self.server_name}/eula.txt', mode='w') as eula:
+            eula.write('eula=true')
 
 def test():
     sl_settings = ServerLauncherSettings()
