@@ -1,3 +1,4 @@
 /.server/
 !TODO/
 workspace.code-workspace
+server.properties

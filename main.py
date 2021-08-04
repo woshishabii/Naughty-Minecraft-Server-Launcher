@@ -11,6 +11,20 @@ import easygui
 import requests
 from bs4 import BeautifulSoup
 
+class PropertyReader():
+    def __init__(self, fileName):
+        self.fileName = fileName
+        self.values = {}
+        self.values_temp = []
+    def read(self):
+        with open(self.fileName, 'r') as property:
+            for temp in property.readlines():
+                if not temp.startswith('#'):
+                    self.values_temp.append(temp)
+        for value in self.values_temp:
+            value = value.split('=')
+            self.values[value[0]] = value[1]
+
 class ServerLauncherSettings():
     def __init__(self):
         # 项目信息 / Project Infomation
@@ -266,7 +280,7 @@ class ServerLauncherGUI():
         choice = easygui.choicebox(msg='请选择已有的服务端版本', title='选择服务端', choices=temp, preselect=0)
         if choice:
             self.current_version = choice
-    def configVersion(self):
+    def configVersion(self, name):
         pass
 
 def test():
