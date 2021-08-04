@@ -158,7 +158,7 @@ class ServerLauncherGUI():
         self.versions = os.listdir(self.sl_settings.versions_path)
         self.current_version = self.versions[0]
         print(f'[LOG] Current Version {self.current_version}')
-    def osnstart(self):
+    def onSstart(self):
         if not os.path.exists(self.sl_settings.versions_path):
             os.mkdir(self.sl_settings.versions_path)
             easygui.msgbox(msg='\t\t\t欢迎使用我的世界服务器工具\n\t\t\tBy. woshishabi', title=self.sl_settings.title, ok_button='开始使用！')
@@ -256,7 +256,7 @@ def test():
     sl_settings = ServerLauncherSettings()
     sl_gui = ServerLauncherGUI(sl_settings)
 
-    sl_gui.osnstart()
+    sl_gui.onSstart()
     while True:
         sl_gui.choose_function()
 
