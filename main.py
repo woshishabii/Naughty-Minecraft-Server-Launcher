@@ -16,14 +16,36 @@ class PropertyReader():
         self.fileName = fileName
         self.values = {}
         self.values_temp = []
-    def read(self):
+        self.readAll()
+    def readAll(self):
         with open(self.fileName, 'r') as property:
             for temp in property.readlines():
                 if not temp.startswith('#'):
-                    self.values_temp.append(temp)
+                    self.values_temp.append(temp.strip())
         for value in self.values_temp:
             value = value.split('=')
             self.values[value[0]] = value[1]
+    def getKey(self, key):
+        ''' TODO
+        this function may discard the changes'''
+        self.readAll()
+        try:
+            return self.values[key]
+        except:
+            return None
+    def setKey(self, key, value):
+        self.readAll()
+        self.values[key] = value
+    def save(self):
+        ''' TODO 
+        this function must be ran after self.readAll()
+        or it will empty the file
+        but it will also discard the changes
+        what the fuck
+        '''
+        with open(self.fileName, mode='w') as property:
+            for temp in self.values:
+                property.write(f'{temp}={self.values[temp]}\n')
 
 class ServerLauncherSettings():
     def __init__(self):
@@ -290,5 +312,14 @@ def test():
     sl_gui.onStart()
     while True:
         sl_gui.choose_function()
+def testProperty():
+    prop = PropertyReader('server.properties')
+    prop.readAll()
+    # print(prop.values)
+    print(len(prop.values.keys()))
+    print(prop.getKey('gamemode'))
+    prop.setKey('gamemode', 'creative')
+    prop.save()
 
-test()
+# test()
+testProperty()
