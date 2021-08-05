@@ -1,7 +1,7 @@
 # By. woshishabi
 
 # 本程序基于bug运行，请勿瞎改
-# This program is based on bug, please do not change it without thinking
+# This program is based on bug, please DO NOT change it without thinking
 
 import os
 import re
@@ -46,6 +46,8 @@ class PropertyReader():
         with open(self.fileName, mode='w') as property:
             for temp in self.values:
                 property.write(f'{temp}={self.values[temp]}\n')
+    def __str__(self):
+        return self.values
 
 class ServerLauncherSettings():
     def __init__(self):
@@ -195,6 +197,7 @@ class ServerLauncherGUI():
         self.sl_settings = sl_settings
         self.got_link = False
         self.versions = os.listdir(self.sl_settings.versions_path)
+        self.server_configs = {}
         if len(self.versions):
             self.current_version = self.versions[0]
             print(f'[LOG] Current Version {self.current_version}')
@@ -212,6 +215,7 @@ class ServerLauncherGUI():
             self.function.append(f'当前选择的服务端: {self.current_version}')
         self.function.append('下载服务端')
         self.function.append('启动服务器')
+        self.function.append('配置服务器')
         self.function.append('尚未完工')
         self.choice = easygui.choicebox(msg='选择操作', title=self.sl_settings.title, choices=self.function, preselect=0)
         print(self.choice)
@@ -221,6 +225,8 @@ class ServerLauncherGUI():
             self.downloadVersion()
         elif self.choice == '启动服务器':
             self.runVersion(self.current_version)
+        elif self.choice == '配置服务器':
+            self.configVersion(self.current_version)
         elif self.choice == '尚未完工':
             easygui.msgbox(msg='这个项目还没有完成')
         elif self.choice == None:
@@ -303,7 +309,15 @@ class ServerLauncherGUI():
         if choice:
             self.current_version = choice
     def configVersion(self, name):
-        pass
+        try:
+            self.server_configs['vanilla'] = PropertyReader(f'{self.sl_settings.versions_path}/{self.current_version}/server/server.properties')
+        except:
+            easygui.msgbox(msg='在配置服务器之前你需要先运行一次服务器', title=self.sl_settings.title, ok_button='返回')
+            return
+        self.config_options = []
+        for temp in self.server_configs['vanilla'].values:
+            self.config_options.append(f'{temp}  当前值为： {self.server_configs["vanilla"].values[temp]}')
+        easygui.choicebox(msg='服务器配置', title='配置服务器', choices=self.config_options, preselect=0)
 
 def test():
     sl_settings = ServerLauncherSettings()
@@ -321,5 +335,5 @@ def testProperty():
     prop.setKey('gamemode', 'creative')
     prop.save()
 
-# test()
-testProperty()
+test()
+# testProperty()
