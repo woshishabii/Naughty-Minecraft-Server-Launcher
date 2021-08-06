@@ -278,7 +278,7 @@ class ServerLauncherGUI():
         elif self.choice == '启动服务器':
             self.runVersion(self.current_version)
         elif self.choice == '配置服务器':
-            self.configVersion(self.current_version)
+            self.configVersion()
         elif self.choice == '尚未完工':
             easygui.msgbox(msg='这个项目还没有完成')
         elif self.choice == None:
@@ -362,7 +362,18 @@ class ServerLauncherGUI():
         choice = easygui.choicebox(msg='请选择已有的服务端版本', title='选择服务端', choices=temp, preselect=0)
         if choice:
             self.current_version = choice
-    def configVersion(self, name):
+    def configVersion(self):
+        self.edition_options = []
+        # 在这里添加受支持的配置文件 / Add the Config Files that
+        if os.path.exists(f'{self.sl_settings.versions_path}/{self.current_version}/server/server.properties'):
+            self.edition_options.append('原版设置(Vanilla - server.properties)')
+        if len(self.edition_options) <= 2:
+            self.edition_options.append('')
+            self.edition_options.append('')
+        self.configVersion_choice = easygui.choicebox(msg='选择配置文件', title='配置服务器', choices=self.edition_options, preselect=0)
+        if self.configVersion_choice == '原版设置(Vanilla - server.properties)':
+            self.vanillaConfigs()
+    def vanillaConfigs(self):
         try:
             self.server_configs['vanilla'] = PropertyReader(f'{self.sl_settings.versions_path}/{self.current_version}/server/server.properties')
         except:
