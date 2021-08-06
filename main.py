@@ -70,7 +70,7 @@ class ServerLauncherSettings():
             'enable-jmx-monitoring':'通过JMX检测服务器每刻耗时',
             'rcon.port':'RCON远程访问端口',
             'gamemode':'新玩家的游戏模式',
-            'enable-command-clock':'启用命令方块',
+            'enable-command-block':'启用命令方块',
             'enable-query':'允许使用GameSpy4协议的服务器监听器，用于获取服务器信息',
             'level-name':'世界名称及存档文件夹名称',
             'motd':'玩家客户端在多人游戏服务器列表中现实的服务器信息',
@@ -113,6 +113,7 @@ class ServerLauncherSettings():
             'resource-pack-sha1':'资源包的SHA-1值，必须使用小写十六进制，用于验证资源包的完整性',
             'spawn-protection':'保护出生点（2x+1）',
             'max-world-size':'设置可让世界边界获得的最大半径值',
+            'debug':'调试模式',
         }
         # 新服务器默认配置 / New Version's Default Settings
         # TODO
@@ -368,13 +369,14 @@ class ServerLauncherGUI():
             easygui.msgbox(msg='在配置服务器之前你需要先运行一次服务器', title=self.sl_settings.title, ok_button='返回')
             return
         
-        self.config_options = []
+        self.config_options = {}
         for temp in self.server_configs['vanilla'].values:
             if temp in self.sl_settings.translate.keys():
-                self.config_options.append(f'{self.sl_settings.translate[temp]}  当前值为： {self.server_configs["vanilla"].values[temp]}')
+                self.config_options[f'{self.sl_settings.translate[temp]}  当前值为： {self.server_configs["vanilla"].values[temp]}'] = temp
             else:
-                self.config_options.append(f'{temp}  当前值为： {self.server_configs["vanilla"].values[temp]}')
-        easygui.choicebox(msg='服务器配置', title='配置服务器', choices=self.config_options, preselect=0)
+                self.config_options[f'{temp}  当前值为： {self.server_configs["vanilla"].values[temp]}'] = temp
+        self.config = easygui.choicebox(msg='服务器配置', title='配置服务器', choices=self.config_options.keys(), preselect=0)
+        print(self.config_options[self.config])
 
 def test():
     sl_settings = ServerLauncherSettings()
