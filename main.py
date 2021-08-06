@@ -368,15 +368,26 @@ class ServerLauncherGUI():
         except:
             easygui.msgbox(msg='在配置服务器之前你需要先运行一次服务器', title=self.sl_settings.title, ok_button='返回')
             return
-        
-        self.config_options = {}
-        for temp in self.server_configs['vanilla'].values:
-            if temp in self.sl_settings.translate.keys():
-                self.config_options[f'{self.sl_settings.translate[temp]}  当前值为： {self.server_configs["vanilla"].values[temp]}'] = temp
-            else:
-                self.config_options[f'{temp}  当前值为： {self.server_configs["vanilla"].values[temp]}'] = temp
-        self.config = easygui.choicebox(msg='服务器配置', title='配置服务器', choices=self.config_options.keys(), preselect=0)
-        print(self.config_options[self.config])
+        while True:
+            self.config_options = {}
+            for temp in self.server_configs['vanilla'].values:
+                if temp in self.sl_settings.translate.keys():
+                    self.config_options[f'{self.sl_settings.translate[temp]}  当前值为： {self.server_configs["vanilla"].values[temp]}'] = temp
+                else:
+                    self.config_options[f'{temp}  当前值为： {self.server_configs["vanilla"].values[temp]}'] = temp
+            self.config_choice = easygui.choicebox(msg='服务器配置', title='配置服务器', choices=self.config_options.keys(), preselect=0)
+            if self.config_choice == None:
+                return
+            self.config = self.config_options[self.config_choice]
+            if self.config == None:
+                return
+            self.newConfig = easygui.enterbox(msg=f'为{self.config}设置新的值', title='更改配置', default=self.server_configs['vanilla'].values[self.config])
+            if self.newConfig == None:
+                continue
+            self.server_configs['vanilla'].setKey(self.config, self.newConfig)
+            self.server_configs['vanilla'].save()
+            # print(self.newConfig)
+        # print(self.config)
 
 def test():
     sl_settings = ServerLauncherSettings()
