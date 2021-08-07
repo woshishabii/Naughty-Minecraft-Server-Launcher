@@ -249,6 +249,9 @@ class ServerLauncherGUI():
     def __init__(self, sl_settings):
         self.sl_settings = sl_settings
         self.got_link = False
+        if not os.path.exists(self.sl_settings.versions_path):
+            os.mkdir(self.sl_settings.versions_path)
+            easygui.msgbox(msg='\t\t\t欢迎使用我的世界服务器工具\n\t\t\tBy. woshishabi', title=self.sl_settings.title, ok_button='开始使用！')
         self.versions = os.listdir(self.sl_settings.versions_path)
         self.server_configs = {}
         if len(self.versions):
@@ -256,10 +259,6 @@ class ServerLauncherGUI():
             print(f'[LOG] Current Version {self.current_version}')
         else:
             self.current_version = None
-    def onStart(self):
-        if not os.path.exists(self.sl_settings.versions_path):
-            os.mkdir(self.sl_settings.versions_path)
-            easygui.msgbox(msg='\t\t\t欢迎使用我的世界服务器工具\n\t\t\tBy. woshishabi', title=self.sl_settings.title, ok_button='开始使用！')
     def choose_function(self):
         self.function = []
         if self.current_version == None:
@@ -417,8 +416,6 @@ class ServerLauncherGUI():
 def test():
     sl_settings = ServerLauncherSettings()
     sl_gui = ServerLauncherGUI(sl_settings)
-
-    sl_gui.onStart()
     while True:
         sl_gui.choose_function()
 def testProperty():

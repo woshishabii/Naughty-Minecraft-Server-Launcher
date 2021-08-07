@@ -3,3 +3,7 @@
 workspace.code-workspace
 server.properties
 bukkit.yml
+main.spec
+/build/
+/dist/.server/
+/__pycache__/
