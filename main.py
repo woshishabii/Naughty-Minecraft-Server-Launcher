@@ -6,6 +6,7 @@
 import os
 import re
 import sys
+import shutil
 
 import easygui
 import requests
@@ -268,6 +269,7 @@ class ServerLauncherGUI():
         self.function.append('下载服务端')
         self.function.append('启动服务器')
         self.function.append('配置服务器')
+        self.function.append('删除服务器')
         self.function.append('尚未完工')
         self.choice = easygui.choicebox(msg='选择操作', title=self.sl_settings.title, choices=self.function, preselect=0)
         print(self.choice)
@@ -279,6 +281,8 @@ class ServerLauncherGUI():
             self.runVersion(self.current_version)
         elif self.choice == '配置服务器':
             self.configVersion()
+        elif self.choice == '删除服务器':
+            self.removeVersion()
         elif self.choice == '尚未完工':
             easygui.msgbox(msg='这个项目还没有完成')
         elif self.choice == None:
@@ -399,6 +403,16 @@ class ServerLauncherGUI():
             self.server_configs['vanilla'].save()
             # print(self.newConfig)
         # print(self.config)
+    def removeVersion(self):
+        if easygui.ynbox(msg=f'你确定要删除这个服务器吗?\n{self.current_version}将会永久失去!(真的很久!)', title='删除服务器', choices=('[<D>]删除', '[<C>]取消'), cancel_choice='[<C>]取消'):
+            shutil.rmtree(f'{self.sl_settings.versions_path}/{self.current_version}')
+        self.versions = os.listdir(self.sl_settings.versions_path)
+        self.server_configs = {}
+        if len(self.versions):
+            self.current_version = self.versions[0]
+            print(f'[LOG] Current Version {self.current_version}')
+        else:
+            self.current_version = None
 
 def test():
     sl_settings = ServerLauncherSettings()
