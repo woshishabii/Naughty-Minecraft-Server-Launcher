@@ -53,7 +53,7 @@ class PropertyReader():
 class ServerLauncherSettings():
     def __init__(self):
         # 项目信息 / Project Infomation
-        self.version = '0.0.1 alpha'
+        self.version = 'Alpha 0.0.1'
         self.name = '我的世界服务器工具'
         self.author = 'woshishabi'
         # 用户界面设置 / GUI settings
