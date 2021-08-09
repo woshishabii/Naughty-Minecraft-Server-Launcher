@@ -11,6 +11,7 @@ import shutil
 import easygui
 import requests
 from bs4 import BeautifulSoup
+import yaml
 
 class PropertyReader():
     def __init__(self, fileName):
@@ -67,7 +68,7 @@ class ServerLauncherSettings():
             'craftbukkit':'https://getbukkit.org/download/craftbukkit',
         }
         # 服务器配置翻译 / Server Config Translate
-        self.translate = {
+        self.vanillaConfigTranslate = {
             'enable-jmx-monitoring':'通过JMX检测服务器每刻耗时',
             'rcon.port':'RCON远程访问端口',
             'gamemode':'新玩家的游戏模式',
@@ -116,9 +117,22 @@ class ServerLauncherSettings():
             'max-world-size':'设置可让世界边界获得的最大半径值',
             'debug':'调试模式',
         }
-        # 新服务器默认配置 / New Version's Default Settings
-        # TODO
-
+        self.spigotConfigTranslate = {
+            'config-version':'配置文件版本',
+            'settings':'系统设置',
+            'messages':'输出信息',
+            'stats':'标志',
+            'commands':'命令',
+            'advancements':'成就',
+            'players':'玩家',
+            'world-settings':'世界设置',
+            'tab-complete':'TAB补全需要输入的字数',
+            'send-namespaced':'TAB时显示命名空间(如/minecraft:tp)',
+            'silent-commandblock-console':'是否将命令方块输出到聊天栏',
+            'log':'是否将玩家提交的指令记录在日志中',
+            'spam-exclusions':'不受防刷屏影响的指令',
+            'replace-commands':'使用原版行为而不是spigot优化后的行为',
+        }
 class LinkHandler():
     def __init__(self, sl_settings):
         self.sl_settings = sl_settings
@@ -370,29 +384,29 @@ class ServerLauncherGUI():
         # 在这里添加受支持的配置文件 / Add the Config Files that
         if os.path.exists(f'{self.sl_settings.versions_path}/{self.current_version}/server/server.properties'):
             self.edition_options.append('原版设置(Vanilla - server.properties)')
-        if len(self.edition_options) <= 2:
+        if os.path.exists(f'{self.sl_settings.versions_path}/{self.current_version}/server/spigot.yml'):
+            self.edition_options.append('Spigot服务端设置(spigot.yml)')
+        if len(self.edition_options) < 2:
             self.edition_options.append('')
             self.edition_options.append('')
         self.configVersion_choice = easygui.choicebox(msg='选择配置文件', title='配置服务器', choices=self.edition_options, preselect=0)
         if self.configVersion_choice == '原版设置(Vanilla - server.properties)':
             self.vanillaConfigs()
+        elif self.configVersion_choice == 'Spigot服务端设置(spigot.yml)':
+            self.spigotConfigs()
     def vanillaConfigs(self):
-        try:
-            self.server_configs['vanilla'] = PropertyReader(f'{self.sl_settings.versions_path}/{self.current_version}/server/server.properties')
-        except:
-            easygui.msgbox(msg='在配置服务器之前你需要先运行一次服务器', title=self.sl_settings.title, ok_button='返回')
-            return
+        self.server_configs['vanilla'] = PropertyReader(f'{self.sl_settings.versions_path}/{self.current_version}/server/server.properties')
         while True:
-            self.config_options = {}
+            self.vanillaConfigOptions = {}
             for temp in self.server_configs['vanilla'].values:
-                if temp in self.sl_settings.translate.keys():
-                    self.config_options[f'{self.sl_settings.translate[temp]}  当前值为： {self.server_configs["vanilla"].values[temp]}'] = temp
+                if temp in self.sl_settings.vanillaConfigTranslate.keys():
+                    self.vanillaConfigOptions[f'{self.sl_settings.vanillaConfigTranslate[temp]}  当前值为： {self.server_configs["vanilla"].values[temp]}'] = temp
                 else:
-                    self.config_options[f'{temp}  当前值为： {self.server_configs["vanilla"].values[temp]}'] = temp
-            self.config_choice = easygui.choicebox(msg='服务器配置', title='配置服务器', choices=self.config_options.keys(), preselect=0)
+                    self.vanillaConfigOptions[f'{temp}  当前值为： {self.server_configs["vanilla"].values[temp]}'] = temp
+            self.config_choice = easygui.choicebox(msg='服务器配置', title='配置服务器', choices=self.vanillaConfigOptions.keys(), preselect=0)
             if self.config_choice == None:
                 return
-            self.config = self.config_options[self.config_choice]
+            self.config = self.vanillaConfigOptions[self.config_choice]
             if self.config == None:
                 return
             self.newConfig = easygui.enterbox(msg=f'为{self.config}设置新的值', title='更改配置', default=self.server_configs['vanilla'].values[self.config])
@@ -402,6 +416,19 @@ class ServerLauncherGUI():
             self.server_configs['vanilla'].save()
             # print(self.newConfig)
         # print(self.config)
+    def spigotConfigs(self):
+        while True:
+            with open(f'{self.sl_settings.versions_path}/{self.current_version}/server/spigot.yml', mode='r') as spigot:
+                self.server_configs['spigot.yml'] = yaml.load(spigot, Loader=yaml.FullLoader)
+            self.spigotConfigOptions = {}
+            # print(self.server_configs['spigot.yml'])
+            for temp in self.server_configs['spigot.yml']:
+                print(temp)
+                if temp in self.sl_settings.spigotConfigTranslate.keys():
+                    self.spigotConfigOptions[f'{self.sl_settings.spigotConfigTranslate[temp]} 当前值为： {self.server_configs["spigot.yml"][temp]}'] = temp
+                else:
+                    self.spigotConfigOptions[f'{temp} 当前值为： {self.server_configs["spigot.yml"][temp]}'] = temp
+            easygui.choicebox(msg='', title='', choices=self.spigotConfigOptions, preselect=0)
     def removeVersion(self):
         if easygui.ynbox(msg=f'你确定要删除这个服务器吗?\n{self.current_version}将会永久失去!(真的很久!)', title='删除服务器', choices=('[<D>]删除', '[<C>]取消'), cancel_choice='[<C>]取消'):
             shutil.rmtree(f'{self.sl_settings.versions_path}/{self.current_version}')

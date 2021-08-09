@@ -7,3 +7,6 @@ main.spec
 /build/
 /dist/.server/
 /__pycache__/
+spigot.yml
+test.json
+*.ipynb
