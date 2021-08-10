@@ -418,6 +418,9 @@ class ServerLauncherGUI():
         # print(self.config)
     def spigotConfigs(self):
         while True:
+            pass
+        '''
+        while True:
             with open(f'{self.sl_settings.versions_path}/{self.current_version}/server/spigot.yml', mode='r') as spigot:
                 self.server_configs['spigot.yml'] = yaml.load(spigot, Loader=yaml.FullLoader)
             self.spigotConfigOptions = {}
@@ -438,10 +441,12 @@ class ServerLauncherGUI():
                     elif type(self.server_configs['spigot.yml'][temp]) == dict:
                         self.spigotConfigOptions[f'字典项： {temp}'] = temp
             self.newConfig = easygui.choicebox(msg='配置服务器', title='服务器配置', choices=self.spigotConfigOptions, preselect=0)
+            print(self.newConfig)
             if self.newConfig == None:
                 break
-            elif type(self.spigotConfigOptions[self.newConfig]) == str:
-                easygui.enterbox()
+            elif type(self.server_configs['spigot.yml'][self.spigotConfigOptions[self.newConfig]]) == str:
+                self.server_configs['spigot.yml'][self.newConfig] = easygui.enterbox()
+        '''
     def removeVersion(self):
         if easygui.ynbox(msg=f'你确定要删除这个服务器吗?\n{self.current_version}将会永久失去!(真的很久!)', title='删除服务器', choices=('[<D>]删除', '[<C>]取消'), cancel_choice='[<C>]取消'):
             shutil.rmtree(f'{self.sl_settings.versions_path}/{self.current_version}')
