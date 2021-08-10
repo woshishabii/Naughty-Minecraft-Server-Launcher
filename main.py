@@ -423,12 +423,25 @@ class ServerLauncherGUI():
             self.spigotConfigOptions = {}
             # print(self.server_configs['spigot.yml'])
             for temp in self.server_configs['spigot.yml']:
-                print(temp)
                 if temp in self.sl_settings.spigotConfigTranslate.keys():
-                    self.spigotConfigOptions[f'{self.sl_settings.spigotConfigTranslate[temp]} 当前值为： {self.server_configs["spigot.yml"][temp]}'] = temp
+                    if type(self.server_configs['spigot.yml'][temp]) == str or type(self.server_configs['spigot.yml'][temp]) == int:
+                        self.spigotConfigOptions[f'{self.sl_settings.spigotConfigTranslate[temp]} 当前值为： {self.server_configs["spigot.yml"][temp]}'] = temp
+                    elif type(self.server_configs['spigot.yml'][temp]) == list:
+                        self.spigotConfigOptions[f'列表项： {self.sl_settings.spigotConfigTranslate[temp]}'] = temp
+                    elif type(self.server_configs['spigot.yml'][temp]) == dict:
+                        self.spigotConfigOptions[f'字典项： {self.sl_settings.spigotConfigTranslate[temp]}'] = temp
                 else:
-                    self.spigotConfigOptions[f'{temp} 当前值为： {self.server_configs["spigot.yml"][temp]}'] = temp
-            easygui.choicebox(msg='', title='', choices=self.spigotConfigOptions, preselect=0)
+                    if type(self.server_configs['spigot.yml'][temp]) == str:
+                        self.spigotConfigOptions[f'{temp} 当前值为： {self.server_configs["spigot.yml"][temp]}'] = temp
+                    elif type(self.server_configs['spigot.yml'][temp]) == list:
+                        self.spigotConfigOptions[f'列表项： {temp}'] = temp
+                    elif type(self.server_configs['spigot.yml'][temp]) == dict:
+                        self.spigotConfigOptions[f'字典项： {temp}'] = temp
+            self.newConfig = easygui.choicebox(msg='配置服务器', title='服务器配置', choices=self.spigotConfigOptions, preselect=0)
+            if self.newConfig == None:
+                break
+            elif type(self.spigotConfigOptions[self.newConfig]) == str:
+                easygui.enterbox()
     def removeVersion(self):
         if easygui.ynbox(msg=f'你确定要删除这个服务器吗?\n{self.current_version}将会永久失去!(真的很久!)', title='删除服务器', choices=('[<D>]删除', '[<C>]取消'), cancel_choice='[<C>]取消'):
             shutil.rmtree(f'{self.sl_settings.versions_path}/{self.current_version}')
