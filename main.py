@@ -51,6 +51,60 @@ class PropertyReader():
     def __str__(self):
         return self.values
 
+class SpigotConfig():
+    def __init__(self, sl_settings, version):
+        self.sl_settings = sl_settings
+        self.version = version
+    def read(self):
+        with open(f'{self.sl_settings.versions_path}/{self.version}/server/spigot.yml', mode='r') as spigot:
+            self.data = yaml.load(spigot, Loader=yaml.FullLoader)
+    def getTranslatedOptions(self):
+        self.translatedoptions = {}
+        for temp in self.data:
+            if temp in self.sl_settings.spigotConfigTranslate:
+                if type(self.data[temp]) == str:
+                    self.translatedoptions[f'文本项：{self.sl_settings.spigotConfigTranslate[temp]} 当前值为{self.data[temp]}'] = temp
+                elif type(self.data[temp]) == int:
+                    self.translatedoptions[f'整数项：{self.sl_settings.spigotConfigTranslate[temp]} 当前值为{self.data[temp]}'] = temp
+                elif type(self.data[temp]) == list:
+                    self.translatedoptions[f'列表项：{self.sl_settings.spigotConfigTranslate[temp]}'] = temp
+                elif type(self.data[temp]) == dict:
+                    self.translatedoptions[f'字典项：{self.sl_settings.spigotConfigTranslate[temp]}'] = temp
+            else:
+                if type(self.data[temp]) == str:
+                    self.translatedoptions[f'文本项：{temp}'] = temp
+                elif type(self.data[temp]) == int:
+                    self.translatedoptions[f'整数项：{temp}'] = temp
+                elif type(self.data[temp]) == list:
+                    self.translatedoptions[f'列表项：{temp}'] = temp
+                elif type(self.data[temp]) == dict:
+                    self.translatedoptions[f'字典项：{temp}'] = temp
+    def configDialog(self):
+        while True:
+            self.configChoice = easygui.choicebox(msg='Spigot配置', title='服务器配置', choices=list(self.translatedoptions), preselect=0)
+            if self.configChoice == None:
+                break
+            elif (type(self.data[self.translatedoptions[self.configChoice]]) == str 
+                or type(self.data[self.translatedoptions[self.configChoice]]) == int):
+                temp = easygui.enterbox(msg=f'为{self.configChoice}设置新的值', title='服务器配置', default=self.data[self.translatedoptions[self.configChoice]])
+                if temp != None:
+                    self.data[self.translatedoptions[self.configChoice]] = temp
+            elif type(self.data[self.translatedoptions[self.configChoice]]) == list:
+                while True:
+                    self.listConfig = self.data[self.translatedoptions[self.configChoice]]
+                    self.listConfig.append('添加项')
+                    self.listChoice = self.choicebox(msg='修改列表项', title='服务器配置', choices=self.listConfig, preselect=0)
+                    if self.listChoice == None:
+                        break
+                    elif self.listChoice == '添加项':
+                        self.listConfigEnter = easygui.enterbox(msg='添加字典内容', title='服务器配置', default='')
+                        if self.listConfigEnter == None:
+                            pass
+                        else:
+                            self.data
+            elif type(self.data[self.translatedoptions[self.configChoice]]) == dict:
+                pass
+
 class ServerLauncherSettings():
     def __init__(self):
         # 项目信息 / Project Infomation
