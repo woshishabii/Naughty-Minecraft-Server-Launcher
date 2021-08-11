@@ -28,3 +28,12 @@ requests == 2.26.0
 
 beautifulsoup4 == 4.9.3
 
+#### 计划
+
+- [ ] Spigot 服务器配置修改
+- [ ] 新 GUI
+- [ ] Forge 服务端下载
+- [ ] MOD 网站解析 CurseForge
+- [ ] 插件网站解析 dev.bukkit
+- [ ] 世界编辑
+- [ ] java 配置
