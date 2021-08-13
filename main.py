@@ -55,6 +55,7 @@ class SpigotConfig():
     def __init__(self, sl_settings, version):
         self.sl_settings = sl_settings
         self.version = version
+        self.read()
     def read(self):
         with open(f'{self.sl_settings.versions_path}/{self.version}/server/spigot.yml', mode='r') as spigot:
             self.data = yaml.load(spigot, Loader=yaml.FullLoader)
@@ -81,17 +82,17 @@ class SpigotConfig():
                     self.translatedoptions[f'字典项：{temp}'] = temp
     def configDialog(self):
         while True:
-            self.configChoice = easygui.choicebox(msg='Spigot配置', title='服务器配置', choices=list(self.translatedoptions), preselect=0)
-            if self.configChoice == None:
+            self.configChoicelv1 = easygui.choicebox(msg='Spigot配置', title='服务器配置', choices=list(self.translatedoptions), preselect=0)
+            if self.configChoicelv1 == None:
                 break
-            elif (type(self.data[self.translatedoptions[self.configChoice]]) == str 
-                or type(self.data[self.translatedoptions[self.configChoice]]) == int):
-                temp = easygui.enterbox(msg=f'为{self.configChoice}设置新的值', title='服务器配置', default=self.data[self.translatedoptions[self.configChoice]])
+            elif (type(self.data[self.translatedoptions[self.configChoicelv1]]) == str 
+                or type(self.data[self.translatedoptions[self.configChoicelv1]]) == int):
+                temp = easygui.enterbox(msg=f'为{self.configChoicelv1}设置新的值', title='服务器配置', default=self.data[self.translatedoptions[self.configChoicelv1]])
                 if temp != None:
-                    self.data[self.translatedoptions[self.configChoice]] = temp
-            elif type(self.data[self.translatedoptions[self.configChoice]]) == list:
+                    self.data[self.translatedoptions[self.configChoicelv1]] = temp
+            elif type(self.data[self.translatedoptions[self.configChoicelv1]]) == list:
                 while True:
-                    self.listConfig = self.data[self.translatedoptions[self.configChoice]]
+                    self.listConfig = self.data[self.translatedoptions[self.configChoicelv1]]
                     self.listConfig.append('添加项')
                     self.listChoice = self.choicebox(msg='修改列表项', title='服务器配置', choices=self.listConfig, preselect=0)
                     if self.listChoice == None:
@@ -101,8 +102,8 @@ class SpigotConfig():
                         if self.listConfigEnter == None:
                             pass
                         else:
-                            self.data
-            elif type(self.data[self.translatedoptions[self.configChoice]]) == dict:
+                            self.data[self.translatedoptions[self.configChoicelv1]].append(self.listConfigEnter)
+            elif type(self.data[self.translatedoptions[self.configChoicelv1]]) == dict:
                 pass
 
 class ServerLauncherSettings():
@@ -312,7 +313,6 @@ class LinkHandler():
         self.sizes['craftbukkit'] = dict(zip(self.versions['craftbukkit'], self.sizes_temp))
         self.release_date['craftbukkit'] = dict(zip(self.versions['craftbukkit'], self.release_date_temp))
         self.getbukkit_links['craftbukkit'] = dict(zip(self.versions['craftbukkit'], self.getbukkit_links_temp))
-
 class ServerLauncherGUI():
     def __init__(self, sl_settings):
         self.sl_settings = sl_settings
@@ -471,8 +471,9 @@ class ServerLauncherGUI():
             # print(self.newConfig)
         # print(self.config)
     def spigotConfigs(self):
-        while True:
-            pass
+        self.sc = SpigotConfig(self.sl_settings, self.current_version)
+        self.sc.getTranslatedOptions()
+        self.sc.configDialog()
         '''
         while True:
             with open(f'{self.sl_settings.versions_path}/{self.current_version}/server/spigot.yml', mode='r') as spigot:
