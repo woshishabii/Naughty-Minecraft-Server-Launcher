@@ -92,7 +92,7 @@ class SpigotConfig():
                 or type(self.data[self.translatedoptions[self.configChoicelv1]]) == int):
                 temp = easygui.enterbox(msg=f'为{self.configChoicelv1}设置新的值', title='服务器配置', default=self.data[self.translatedoptions[self.configChoicelv1]])
                 if temp != None:
-                    if temp.startswith('数字项'):
+                    if self.configChoicelv1.startswith('数字项'):
                         self.data[self.translatedoptions[self.configChoicelv1]] = int(temp)
                     else:
                         self.data[self.translatedoptions[self.configChoicelv1]] = temp
