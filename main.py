@@ -59,6 +59,9 @@ class SpigotConfig():
     def read(self):
         with open(f'{self.sl_settings.versions_path}/{self.version}/server/spigot.yml', mode='r') as spigot:
             self.data = yaml.load(spigot, Loader=yaml.FullLoader)
+    def write(self):
+        with open(f'{self.sl_settings.versions_path}/{self.version}/server/spigot.yml', mode='w') as spigot:
+            yaml.dump(self.data, spigot)
     def getTranslatedOptions(self):
         self.translatedoptions = {}
         for temp in self.data:
@@ -89,7 +92,12 @@ class SpigotConfig():
                 or type(self.data[self.translatedoptions[self.configChoicelv1]]) == int):
                 temp = easygui.enterbox(msg=f'为{self.configChoicelv1}设置新的值', title='服务器配置', default=self.data[self.translatedoptions[self.configChoicelv1]])
                 if temp != None:
-                    self.data[self.translatedoptions[self.configChoicelv1]] = temp
+                    if temp.startswith('数字项'):
+                        self.data[self.translatedoptions[self.configChoicelv1]] = int(temp)
+                    else:
+                        self.data[self.translatedoptions[self.configChoicelv1]] = temp
+                    self.write()
+                    self.read()
             elif type(self.data[self.translatedoptions[self.configChoicelv1]]) == list:
                 while True:
                     self.listConfig = self.data[self.translatedoptions[self.configChoicelv1]]
