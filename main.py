@@ -511,6 +511,8 @@ class ServerLauncherGUI():
                 self.server_configs['spigot.yml'][self.newConfig] = easygui.enterbox()
         '''
     def removeVersion(self):
+        if self.current_version == None:
+            return
         if easygui.ynbox(msg=f'你确定要删除这个服务器吗?\n{self.current_version}将会永久失去!(真的很久!)', title='删除服务器', choices=('[<D>]删除', '[<C>]取消'), cancel_choice='[<C>]取消'):
             shutil.rmtree(f'{self.sl_settings.versions_path}/{self.current_version}')
         self.versions = os.listdir(self.sl_settings.versions_path)
