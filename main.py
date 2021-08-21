@@ -85,6 +85,21 @@ class SpigotConfig():
                     self.translatedoptions[f'字典项：{temp}'] = temp
     def configDialog(self):
         while True:
+            self.read()
+            self.sc.getTranslatedOptions()
+            self.spigotConfigChoicelv1 = easygui.choicebox(msg='spigot.yml配置编辑', title='spigot.yml', choices=list(self.translatedoptions), preselect=0)
+            if self.spigotConfigChoicelv1 == None:
+                break
+            elif type(self.translatedoptions[self.spigotConfigChoicelv1]) == int:
+                pass
+            elif type(self.translatedoptions[self.spigotConfigChoicelv1]) == str:
+                pass
+            elif type(self.translatedoptions[self.spigotConfigChoicelv1]) == list:
+                pass
+            elif type(self.translatedoptions[self.spigotConfigChoicelv1]) == dict:
+                pass
+        '''
+        while True:
             self.configChoicelv1 = easygui.choicebox(msg='Spigot配置', title='服务器配置', choices=list(self.translatedoptions), preselect=0)
             if self.configChoicelv1 == None:
                 break
@@ -113,7 +128,7 @@ class SpigotConfig():
                             self.data[self.translatedoptions[self.configChoicelv1]].append(self.listConfigEnter)
             elif type(self.data[self.translatedoptions[self.configChoicelv1]]) == dict:
                 pass
-
+            '''
 class ServerLauncherSettings():
     def __init__(self):
         # 项目信息 / Project Infomation
@@ -480,7 +495,6 @@ class ServerLauncherGUI():
         # print(self.config)
     def spigotConfigs(self):
         self.sc = SpigotConfig(self.sl_settings, self.current_version)
-        self.sc.getTranslatedOptions()
         self.sc.configDialog()
         '''
         while True:
