@@ -11,3 +11,4 @@ spigot.yml
 test.json
 *.ipynb
 aaa.py
+/material/
