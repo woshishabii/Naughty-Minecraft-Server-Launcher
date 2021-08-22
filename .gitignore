@@ -12,3 +12,4 @@ test.json
 *.ipynb
 aaa.py
 /material/
+/.idea/
