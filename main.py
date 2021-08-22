@@ -14,7 +14,7 @@ from bs4 import BeautifulSoup
 import yaml
 
 
-class PropertyReader():
+class PropertyReader:
     def __init__(self, fileName):
         self.fileName = fileName
         self.values = {}
@@ -31,8 +31,8 @@ class PropertyReader():
             self.values[value[0]] = value[1]
 
     def getKey(self, key):
-        ''' TODO
-        this function may discard the changes'''
+        """ TODO
+        this function may discard the changes"""
         self.readAll()
         try:
             return self.values[key]
@@ -99,10 +99,10 @@ class SpigotConfig():
     def configDialog(self):
         while True:
             self.read()
-            self.sc.getTranslatedOptions()
+            self.getTranslatedOptions()
             self.spigotConfigChoicelv1 = easygui.choicebox(msg='spigot.yml配置编辑', title='spigot.yml',
                                                            choices=list(self.translatedoptions), preselect=0)
-            if self.spigotConfigChoicelv1 == None:
+            if self.spigotConfigChoicelv1 is None:
                 break
             elif type(self.translatedoptions[self.spigotConfigChoicelv1]) == int:
                 self.translatedoptions[self.spigotConfigChoicelv1] = None
