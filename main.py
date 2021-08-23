@@ -13,6 +13,11 @@ import requests
 from bs4 import BeautifulSoup
 import yaml
 
+from kivy.app import App
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.label import Label
+from kivy.uix.textinput import TextInput
+
 
 class PropertyReader:
     def __init__(self, fileName):
@@ -583,6 +588,17 @@ class ServerLauncherGUI():
             self.current_version = None
 
 
+class ServerLauncherWidget(GridLayout):
+    def __init__(self, **kwargs):
+        super(ServerLauncherWidget, self).__init__(**kwargs)
+        self.cols = 2
+
+
+class ServerLauncherApp(App):
+    def build(self):
+        return ServerLauncherWidget()
+
+
 def test():
     sl_settings = ServerLauncherSettings()
     sl_gui = ServerLauncherGUI(sl_settings)
@@ -600,5 +616,12 @@ def testProperty():
     prop.save()
 
 
-test()
+def testGui():
+    ServerLauncherApp().run()
+
+
+if __name__ == '__main__':
+    # test()
+    testGui()
+
 # testProperty()
