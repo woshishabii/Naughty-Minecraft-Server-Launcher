@@ -606,16 +606,6 @@ def test():
         sl_gui.choose_function()
 
 
-def testProperty():
-    prop = PropertyReader('server.properties')
-    prop.readAll()
-    # print(prop.values)
-    print(len(prop.values.keys()))
-    print(prop.getKey('gamemode'))
-    prop.setKey('gamemode', 'creative')
-    prop.save()
-
-
 def testGui():
     ServerLauncherApp().run()
 
@@ -623,5 +613,3 @@ def testGui():
 if __name__ == '__main__':
     # test()
     testGui()
-
-# testProperty()
