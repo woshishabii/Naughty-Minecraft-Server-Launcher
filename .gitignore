@@ -13,3 +13,6 @@ test.json
 aaa.py
 /material/
 /.idea/
+!*.exe
+/dist/
+*.log

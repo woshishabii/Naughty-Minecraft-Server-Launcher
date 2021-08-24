@@ -13,10 +13,17 @@ import requests
 from bs4 import BeautifulSoup
 import yaml
 
+import kivy
 from kivy.app import App
 from kivy.uix.gridlayout import GridLayout
+from kivy.uix.button import Button
 from kivy.uix.label import Label
-from kivy.uix.textinput import TextInput
+from kivy.config import Config
+
+Config.write()
+
+kivy.resources.resource_add_path('./font')
+YaHei = kivy.resources.resource_find("msyh.ttc")
 
 
 class PropertyReader:
@@ -153,7 +160,7 @@ class SpigotConfig():
 class ServerLauncherSettings():
     def __init__(self):
         # 项目信息 / Project Infomation
-        self.version = 'Alpha 0.0.1'
+        self.version = 'Alpha 0.0.2'
         self.name = '我的世界服务器工具'
         self.author = 'woshishabi'
         # 用户界面设置 / GUI settings
@@ -591,7 +598,40 @@ class ServerLauncherGUI():
 class ServerLauncherWidget(GridLayout):
     def __init__(self, **kwargs):
         super(ServerLauncherWidget, self).__init__(**kwargs)
+        self.ServerLauncherGUI = ServerLauncherGUI(ServerLauncherSettings())
         self.cols = 2
+        self.add_widget(Label(text='选择版本', font_name=YaHei))
+        self.ServerLauncherGUI.current_version = 'spigot-1.17.1'
+        self.selectVersionButton = Button(text=self.ServerLauncherGUI.current_version,
+                                          font_size="20sp",
+                                          background_color=(0, 0.5, 0.5, 1),
+                                          color=(0, 1, 1, 1),
+                                          font_name=YaHei)
+        self.selectVersionButton.bind(on_press=self.selectVersionButtonBind)
+        self.add_widget(self.selectVersionButton)
+        self.runVersionButton = Button(text='启动服务器',
+                                       font_size="20sp",
+                                       background_color=(0, 0.5, 0.5, 1),
+                                       color=(0, 1, 1, 1),
+                                       font_name=YaHei)
+        self.runVersionButton.bind(on_press=self.runVersionButtonBind)
+        self.add_widget(self.runVersionButton)
+        self.configVersionButton = Button(text='配置服务器',
+                                          font_size="20sp",
+                                          background_color=(0, 0.5, 0.5, 1),
+                                          color=(0, 1, 1, 1),
+                                          font_name=YaHei)
+        self.configVersionButton.bind(on_press=self.configVersionButtonBing)
+        self.add_widget(self.configVersionButton)
+
+    def selectVersionButtonBind(self, event):
+        self.ServerLauncherGUI.chooseVersion()
+
+    def runVersionButtonBind(self, event):
+        self.ServerLauncherGUI.runVersion(self.ServerLauncherGUI.current_version)
+
+    def configVersionButtonBing(self, event):
+        self.ServerLauncherGUI.configVersion()
 
 
 class ServerLauncherApp(App):
