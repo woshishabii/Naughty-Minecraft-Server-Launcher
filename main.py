@@ -8,6 +8,8 @@ import re
 import sys
 import shutil
 
+import tkinter
+
 import easygui
 import requests
 from bs4 import BeautifulSoup
@@ -360,10 +362,12 @@ class LinkHandler():
         self.getbukkit_links['craftbukkit'] = dict(zip(self.versions['craftbukkit'], self.getbukkit_links_temp))
 
 
-class ServerLauncherGUI():
+class ServerLauncherFunctions:
     def __init__(self, sl_settings):
         self.sl_settings = sl_settings
         self.got_link = False
+
+    def start(self):
         if not os.path.exists(self.sl_settings.versions_path):
             os.mkdir(self.sl_settings.versions_path)
             easygui.msgbox(msg='\t\t\t欢迎使用我的世界服务器工具\n\t\t\tBy. woshishabi', title=self.sl_settings.title,
@@ -375,34 +379,6 @@ class ServerLauncherGUI():
             print(f'[LOG] Current Version {self.current_version}')
         else:
             self.current_version = None
-
-    def choose_function(self):
-        self.function = []
-        if self.current_version == None:
-            self.function.append('未选择服务端')
-        else:
-            self.function.append(f'当前选择的服务端: {self.current_version}')
-        self.function.append('下载服务端')
-        self.function.append('启动服务器')
-        self.function.append('配置服务器')
-        self.function.append('删除服务器')
-        self.function.append('尚未完工')
-        self.choice = easygui.choicebox(msg='选择操作', title=self.sl_settings.title, choices=self.function, preselect=0)
-        print(self.choice)
-        if self.choice == f'当前选择的服务端: {self.current_version}':
-            self.chooseVersion()
-        elif self.choice == '下载服务端':
-            self.downloadVersion()
-        elif self.choice == '启动服务器':
-            self.runVersion(self.current_version)
-        elif self.choice == '配置服务器':
-            self.configVersion()
-        elif self.choice == '删除服务器':
-            self.removeVersion()
-        elif self.choice == '尚未完工':
-            easygui.msgbox(msg='这个项目还没有完成')
-        elif self.choice == None:
-            sys.exit()
 
     def downloadVersion(self):
         if not self.got_link:
@@ -425,7 +401,7 @@ class ServerLauncherGUI():
                                                     choices=list(self.versions_info.keys()), preselect=0)
             if not self.version_choice:
                 return
-            print(self.version_choice)
+            print(f'Selected {self.version_choice} to download')
         else:
             return
         self.server_name = easygui.enterbox(msg='请输入新配置的名称', title='创建新配置',
@@ -480,7 +456,7 @@ class ServerLauncherGUI():
     def runVersion(self, name):
         self.working_directory = os.getcwd()
         os.chdir(f'{self.sl_settings.versions_path}/{name}/server')
-        os.system(f'java -Xms1G -Xmx2G -jar {name}.jar nogui')
+        os.system(f'start java -Xms1G -Xmx2G -jar {name}.jar nogui')
         os.chdir(self.working_directory)
 
     def chooseVersion(self):
@@ -583,7 +559,56 @@ class ServerLauncherGUI():
             self.current_version = None
 
 
+class ServerLauncherGUI:
+    def __init__(self, sl_settings, sl_functions):
+        self.sl_settings = sl_settings
+        self.sl_functions = sl_functions
+        self.sl_functions.start()
+
+    def choose_function(self):
+        self.function = []
+        if self.sl_functions.current_version == None:
+            self.function.append('未选择服务端')
+        else:
+            self.function.append(f'当前选择的服务端: {self.sl_functions.current_version}')
+        self.function.append('下载服务端')
+        self.function.append('启动服务器')
+        self.function.append('配置服务器')
+        self.function.append('删除服务器')
+        self.function.append('尚未完工')
+        self.choice = easygui.choicebox(msg='选择操作', title=self.sl_settings.title, choices=self.function, preselect=0)
+        # print(self.choice)
+        if self.choice == f'当前选择的服务端: {self.sl_functions.current_version}':
+            self.sl_functions.chooseVersion()
+        elif self.choice == '下载服务端':
+            self.sl_functions.downloadVersion()
+        elif self.choice == '启动服务器':
+            self.sl_functions.runVersion(self.sl_functions.current_version)
+        elif self.choice == '配置服务器':
+            self.sl_functions.configVersion()
+        elif self.choice == '删除服务器':
+            self.sl_functions.removeVersion()
+        elif self.choice == '尚未完工':
+            easygui.msgbox(msg='这个项目还没有完成')
+        elif self.choice == None:
+            sys.exit()
+
+
+class NewGUI:
+    def __init__(self):
+        self.root = tkinter.Tk()
+        # self.ButtonStartServer = tkinter.Button(self.root, text='启动服务器', command=)
+
+
 def test():
+    sl_settings = ServerLauncherSettings()
+    sl_funtions = ServerLauncherFunctions(sl_settings)
+    sl_gui = ServerLauncherGUI(sl_settings, sl_funtions)
+    while True:
+        sl_gui.choose_function()
+
+
+def debug():
     sl_settings = ServerLauncherSettings()
     sl_gui = ServerLauncherGUI(sl_settings)
     while True:
@@ -592,4 +617,6 @@ def test():
 
 if __name__ == '__main__':
     test()
-    # testGui()
+elif __name__ == 'main':
+    pass
+
