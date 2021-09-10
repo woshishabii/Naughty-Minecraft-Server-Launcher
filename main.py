@@ -636,6 +636,7 @@ class ServerLauncherWidget(GridLayout):
 
 class ServerLauncherApp(App):
     def build(self):
+        self.icon = 'icon.ico'
         return ServerLauncherWidget()
 
 
@@ -651,5 +652,5 @@ def testGui():
 
 
 if __name__ == '__main__':
-    # test()
-    testGui()
+    test()
+    # testGui()
