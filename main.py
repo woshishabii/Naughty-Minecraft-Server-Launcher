@@ -13,27 +13,15 @@ import requests
 from bs4 import BeautifulSoup
 import yaml
 
-import kivy
-from kivy.app import App
-from kivy.uix.gridlayout import GridLayout
-from kivy.uix.button import Button
-from kivy.uix.label import Label
-from kivy.config import Config
-
-Config.write()
-
-kivy.resources.resource_add_path('./font')
-YaHei = kivy.resources.resource_find("msyh.ttc")
-
 
 class PropertyReader:
-    def __init__(self, fileName):
-        self.fileName = fileName
+    def __init__(self, file_name):
+        self.fileName = file_name
         self.values = {}
         self.values_temp = []
-        self.readAll()
+        self.read_all()
 
-    def readAll(self):
+    def read_all(self):
         with open(self.fileName, 'r') as property:
             for temp in property.readlines():
                 if not temp.startswith('#'):
@@ -45,14 +33,14 @@ class PropertyReader:
     def getKey(self, key):
         """ TODO
         this function may discard the changes"""
-        self.readAll()
+        self.read_all()
         try:
             return self.values[key]
-        except:
+        except KeyError:
             return None
 
     def setKey(self, key, value):
-        self.readAll()
+        self.read_all()
         self.values[key] = value
 
     def save(self):
@@ -72,6 +60,7 @@ class PropertyReader:
 
 class SpigotConfig():
     def __init__(self, sl_settings, version):
+        self.translatedoptions = {}
         self.sl_settings = sl_settings
         self.version = version
         self.read()
@@ -85,7 +74,6 @@ class SpigotConfig():
             yaml.dump(self.data, spigot)
 
     def getTranslatedOptions(self):
-        self.translatedoptions = {}
         for temp in self.data:
             if temp in self.sl_settings.spigotConfigTranslate:
                 if type(self.data[temp]) == str:
@@ -450,7 +438,7 @@ class ServerLauncherGUI():
         except:
             easygui.ynbox(msg=f'指定的版本名称已存在，请重新命名\n如果你确定没有创建此版本，请删除{self.sl_settings.versions_path}/{self.server_name}',
                           title='指定版本名称已存在',
-                          choices=('[<Y>] 确定', '[<C>] 取消'), cancel_choice='[<C>] 取消')
+                          choices=['[<Y>] 确定', '[<C>] 取消'], cancel_choice='[<C>] 取消')
             return
         easygui.msgbox(msg='即将开始下载', title=self.sl_settings.title, ok_button='开始')
         self.getbukkit_request = requests.get(
@@ -478,11 +466,11 @@ class ServerLauncherGUI():
             self.eula_pattern = re.compile(r'<[^>]+>', re.S)
             self.eula_text = self.eula_pattern.sub('', str(temp))
             break
-        self.agree_eula = easygui.ynbox(msg=self.eula_text, title='最终用户许可协议', choices=('[<A>] 同意', '[<D>] 不同意'),
+        self.agree_eula = easygui.ynbox(msg=self.eula_text, title='最终用户许可协议', choices=['[<A>] 同意', '[<D>] 不同意'],
                                         default_choice='[<D>] 不同意')
         while not self.agree_eula:
             easygui.msgbox(msg='要运行服务端，您必须同意Mojang最终用户许可协议')
-            self.agree_eula = easygui.ynbox(msg=self.eula_text, title='最终用户许可协议', choices=('[<A>] 同意', '[<D>] 不同意'),
+            self.agree_eula = easygui.ynbox(msg=self.eula_text, title='最终用户许可协议', choices=['[<A>] 同意', '[<D>] 不同意'],
                                             default_choice='[<D>] 不同意')
             print(self.agree_eula)
         with open(f'{self.sl_settings.versions_path}/{self.server_name}/server/eula.txt', mode='w') as eula:
@@ -532,7 +520,7 @@ class ServerLauncherGUI():
                         f'{self.sl_settings.vanillaConfigTranslate[temp]}  当前值为： {self.server_configs["vanilla"].values[temp]}'] = temp
                 else:
                     self.vanillaConfigOptions[f'{temp}  当前值为： {self.server_configs["vanilla"].values[temp]}'] = temp
-            self.config_choice = easygui.choicebox(msg='服务器配置', title='配置服务器', choices=self.vanillaConfigOptions.keys(),
+            self.config_choice = easygui.choicebox(msg='服务器配置', title='配置服务器', choices=list(self.vanillaConfigOptions.keys()),
                                                    preselect=0)
             if self.config_choice == None:
                 return
@@ -584,7 +572,7 @@ class ServerLauncherGUI():
         if self.current_version == None:
             return
         if easygui.ynbox(msg=f'你确定要删除这个服务器吗?\n{self.current_version}将会永久失去!(真的很久!)', title='删除服务器',
-                         choices=('[<D>]删除', '[<C>]取消'), cancel_choice='[<C>]取消'):
+                         choices=['[<D>]删除', '[<C>]取消'], cancel_choice='[<C>]取消'):
             shutil.rmtree(f'{self.sl_settings.versions_path}/{self.current_version}')
         self.versions = os.listdir(self.sl_settings.versions_path)
         self.server_configs = {}
@@ -595,60 +583,11 @@ class ServerLauncherGUI():
             self.current_version = None
 
 
-class ServerLauncherWidget(GridLayout):
-    def __init__(self, **kwargs):
-        super(ServerLauncherWidget, self).__init__(**kwargs)
-        self.ServerLauncherGUI = ServerLauncherGUI(ServerLauncherSettings())
-        self.cols = 2
-        self.add_widget(Label(text='选择版本', font_name=YaHei))
-        self.ServerLauncherGUI.current_version = 'spigot-1.17.1'
-        self.selectVersionButton = Button(text=self.ServerLauncherGUI.current_version,
-                                          font_size="20sp",
-                                          background_color=(0, 0.5, 0.5, 1),
-                                          color=(0, 1, 1, 1),
-                                          font_name=YaHei)
-        self.selectVersionButton.bind(on_press=self.selectVersionButtonBind)
-        self.add_widget(self.selectVersionButton)
-        self.runVersionButton = Button(text='启动服务器',
-                                       font_size="20sp",
-                                       background_color=(0, 0.5, 0.5, 1),
-                                       color=(0, 1, 1, 1),
-                                       font_name=YaHei)
-        self.runVersionButton.bind(on_press=self.runVersionButtonBind)
-        self.add_widget(self.runVersionButton)
-        self.configVersionButton = Button(text='配置服务器',
-                                          font_size="20sp",
-                                          background_color=(0, 0.5, 0.5, 1),
-                                          color=(0, 1, 1, 1),
-                                          font_name=YaHei)
-        self.configVersionButton.bind(on_press=self.configVersionButtonBing)
-        self.add_widget(self.configVersionButton)
-
-    def selectVersionButtonBind(self, event):
-        self.ServerLauncherGUI.chooseVersion()
-
-    def runVersionButtonBind(self, event):
-        self.ServerLauncherGUI.runVersion(self.ServerLauncherGUI.current_version)
-
-    def configVersionButtonBing(self, event):
-        self.ServerLauncherGUI.configVersion()
-
-
-class ServerLauncherApp(App):
-    def build(self):
-        self.icon = 'icon.ico'
-        return ServerLauncherWidget()
-
-
 def test():
     sl_settings = ServerLauncherSettings()
     sl_gui = ServerLauncherGUI(sl_settings)
     while True:
         sl_gui.choose_function()
-
-
-def testGui():
-    ServerLauncherApp().run()
 
 
 if __name__ == '__main__':
