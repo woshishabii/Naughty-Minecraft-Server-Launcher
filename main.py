@@ -154,8 +154,8 @@ class SpigotConfig:
 class ServerLauncherSettings:
     def __init__(self):
         # 项目信息 / Project Infomation
-        self.version = 'Alpha 0.0.2'
-        self.name = '我的世界服务器工具'
+        self.version = 'Alpha 0.0.3'
+        self.name = 'Naughty Minecraft Server Launcher'
         self.author = 'woshishabi'
         # 用户界面设置 / GUI settings
         self.title = f'{self.name} {self.version}'
@@ -599,6 +599,7 @@ class NewGUI:
         self.sl_functions.start()
         # 主窗口
         self.root = tkinter.Tk()
+        self.root.geometry('500x400')
         self.root.title(self.sl_functions.sl_settings.title)
         # self.root.configure(bg='#DDDDDD')
         # 当前版本字符串
@@ -609,21 +610,23 @@ class NewGUI:
                                                   bg='#116FCE',
                                                   fg='white',
                                                   font=('Microsoft Yahei', 12),
-                                                  width=30,
-                                                  height=1)
+                                                  width=50,
+                                                  height=2)
         self.currentVersionVar.set(f'当前版本：{self.sl_functions.current_version}')
         self.LabelSelectedVersion.pack()
         # 切换版本 Button
         self.ButtonChangeVersion = tkinter.Button(self.root,
                                                   text='切换版本',
                                                   command=self.change_version,
-                                                  width=10)
+                                                  width=30,
+                                                  height=2)
         self.ButtonChangeVersion.pack()
         # 启动服务器 Button
         self.ButtonStartServer = tkinter.Button(self.root,
                                                 text='启动服务器',
                                                 command=self.start_server,
-                                                width=10)
+                                                width=30,
+                                                height=2)
         self.ButtonStartServer.pack()
 
     def main(self):
@@ -641,6 +644,14 @@ class NewGUI:
         for temp in self.versionList:
             self.ListBoxSelectVersion.insert('end', temp)
         self.ListBoxSelectVersion.pack()
+        self.ButtonSelectVersionSubmit = tkinter.Button(self.ChangeVersionWindow,
+                                                        text='确定',
+                                                        width=20,
+                                                        height=2,
+                                                        command=self.submitSelectVersion)
+
+    def submitSelectVersion(self):
+        pass
 
 
 
@@ -661,6 +672,6 @@ def dev():
 
 
 if __name__ == '__main__':
-    test()
+    dev()
 elif __name__ == 'main':
     dev()

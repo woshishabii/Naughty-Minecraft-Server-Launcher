@@ -16,3 +16,4 @@ aaa.py
 !*.exe
 /dist/
 *.log
+*.spec
