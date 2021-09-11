@@ -60,7 +60,7 @@ class PropertyReader:
         return self.values
 
 
-class SpigotConfig():
+class SpigotConfig:
     def __init__(self, sl_settings, version):
         self.translatedoptions = {}
         self.sl_settings = sl_settings
@@ -116,12 +116,17 @@ class SpigotConfig():
                 pass
         '''
         while True:
-            self.configChoicelv1 = easygui.choicebox(msg='Spigot配置', title='服务器配置', choices=list(self.translatedoptions), preselect=0)
+            self.configChoicelv1 = easygui.choicebox(msg='Spigot配置', 
+                                                     title='服务器配置', 
+                                                     choices=list(self.translatedoptions), 
+                                                     preselect=0)
             if self.configChoicelv1 == None:
                 break
             elif (type(self.data[self.translatedoptions[self.configChoicelv1]]) == str 
                 or type(self.data[self.translatedoptions[self.configChoicelv1]]) == int):
-                temp = easygui.enterbox(msg=f'为{self.configChoicelv1}设置新的值', title='服务器配置', default=self.data[self.translatedoptions[self.configChoicelv1]])
+                temp = easygui.enterbox(msg=f'为{self.configChoicelv1}设置新的值', 
+                                        title='服务器配置', 
+                                        default=self.data[self.translatedoptions[self.configChoicelv1]])
                 if temp != None:
                     if self.configChoicelv1.startswith('数字项'):
                         self.data[self.translatedoptions[self.configChoicelv1]] = int(temp)
@@ -147,7 +152,7 @@ class SpigotConfig():
             '''
 
 
-class ServerLauncherSettings():
+class ServerLauncherSettings:
     def __init__(self):
         # 项目信息 / Project Infomation
         self.version = 'Alpha 0.0.2'
@@ -231,8 +236,8 @@ class ServerLauncherSettings():
         }
 
 
-class LinkHandler():
-    def __init__(self, sl_settings):
+class LinkHandler:
+    def __init__(self, sl_settings: ServerLauncherSettings):
         self.sl_settings = sl_settings
         self.getbukkit_requests = {}
         self.soups = {}
@@ -363,7 +368,7 @@ class LinkHandler():
 
 
 class ServerLauncherFunctions:
-    def __init__(self, sl_settings):
+    def __init__(self, sl_settings: ServerLauncherSettings):
         self.sl_settings = sl_settings
         self.got_link = False
 
@@ -560,7 +565,7 @@ class ServerLauncherFunctions:
 
 
 class ServerLauncherGUI:
-    def __init__(self, sl_settings, sl_functions):
+    def __init__(self, sl_settings: ServerLauncherSettings, sl_functions: ServerLauncherFunctions):
         self.sl_settings = sl_settings
         self.sl_functions = sl_functions
         self.sl_functions.start()
@@ -595,28 +600,40 @@ class ServerLauncherGUI:
 
 
 class NewGUI:
-    def __init__(self):
+    def __init__(self, sl_functions: ServerLauncherFunctions):
+        self.sl_functions = sl_functions
+        self.sl_functions.start()
         self.root = tkinter.Tk()
-        # self.ButtonStartServer = tkinter.Button(self.root, text='启动服务器', command=)
+        self.ButtonStartServer = tkinter.Button(self.root,
+                                                text='启动服务器',
+                                                command=self.start_server)
+        self.ButtonStartServer.pack()
+
+    def main(self):
+        self.root.mainloop()
+
+    def start_server(self):
+        self.sl_functions.runVersion(self.sl_functions.current_version)
 
 
 def test():
     sl_settings = ServerLauncherSettings()
-    sl_funtions = ServerLauncherFunctions(sl_settings)
-    sl_gui = ServerLauncherGUI(sl_settings, sl_funtions)
+    sl_functions = ServerLauncherFunctions(sl_settings)
+    sl_gui = ServerLauncherGUI(sl_settings, sl_functions)
     while True:
         sl_gui.choose_function()
 
 
 def debug():
     sl_settings = ServerLauncherSettings()
-    sl_gui = ServerLauncherGUI(sl_settings)
-    while True:
-        sl_gui.choose_function()
+    sl_functions = ServerLauncherFunctions(sl_settings)
+    sl_functions.start()
+    sl_gui = NewGUI(sl_functions)
+    sl_gui.main()
 
 
 if __name__ == '__main__':
     test()
 elif __name__ == 'main':
-    pass
+    debug()
 
