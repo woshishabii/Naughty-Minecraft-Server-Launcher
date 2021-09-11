@@ -5,15 +5,14 @@
 
 import os
 import re
-import sys
 import shutil
-
+import sys
 import tkinter
 
 import easygui
 import requests
-from bs4 import BeautifulSoup
 import yaml
+from bs4 import BeautifulSoup
 
 
 class PropertyReader:
@@ -464,14 +463,8 @@ class ServerLauncherFunctions:
         os.system(f'start java -Xms1G -Xmx2G -jar {name}.jar nogui')
         os.chdir(self.working_directory)
 
-    def chooseVersion(self):
-        temp = os.listdir(self.sl_settings.versions_path)
-        if len(temp) <= 2:
-            temp.append('')
-            temp.append('')
-        choice = easygui.choicebox(msg='请选择已有的服务端版本', title='选择服务端', choices=temp, preselect=0)
-        if choice:
-            self.current_version = choice
+    def getVersionList(self):
+        return os.listdir(self.sl_settings.versions_path)
 
     def configVersion(self):
         self.edition_options = []
@@ -501,7 +494,8 @@ class ServerLauncherFunctions:
                         f'{self.sl_settings.vanillaConfigTranslate[temp]}  当前值为： {self.server_configs["vanilla"].values[temp]}'] = temp
                 else:
                     self.vanillaConfigOptions[f'{temp}  当前值为： {self.server_configs["vanilla"].values[temp]}'] = temp
-            self.config_choice = easygui.choicebox(msg='服务器配置', title='配置服务器', choices=list(self.vanillaConfigOptions.keys()),
+            self.config_choice = easygui.choicebox(msg='服务器配置', title='配置服务器',
+                                                   choices=list(self.vanillaConfigOptions.keys()),
                                                    preselect=0)
             if self.config_choice == None:
                 return
@@ -584,7 +578,7 @@ class ServerLauncherGUI:
         self.choice = easygui.choicebox(msg='选择操作', title=self.sl_settings.title, choices=self.function, preselect=0)
         # print(self.choice)
         if self.choice == f'当前选择的服务端: {self.sl_functions.current_version}':
-            self.sl_functions.chooseVersion()
+            self.sl_functions.getVersionList()
         elif self.choice == '下载服务端':
             self.sl_functions.downloadVersion()
         elif self.choice == '启动服务器':
@@ -603,10 +597,33 @@ class NewGUI:
     def __init__(self, sl_functions: ServerLauncherFunctions):
         self.sl_functions = sl_functions
         self.sl_functions.start()
+        # 主窗口
         self.root = tkinter.Tk()
+        self.root.title(self.sl_functions.sl_settings.title)
+        # self.root.configure(bg='#DDDDDD')
+        # 当前版本字符串
+        self.currentVersionVar = tkinter.StringVar()
+        # 当前正在选择的版本显示Label
+        self.LabelSelectedVersion = tkinter.Label(self.root,
+                                                  textvariable=self.currentVersionVar,
+                                                  bg='#116FCE',
+                                                  fg='white',
+                                                  font=('Microsoft Yahei', 12),
+                                                  width=30,
+                                                  height=1)
+        self.currentVersionVar.set(f'当前版本：{self.sl_functions.current_version}')
+        self.LabelSelectedVersion.pack()
+        # 切换版本 Button
+        self.ButtonChangeVersion = tkinter.Button(self.root,
+                                                  text='切换版本',
+                                                  command=self.change_version,
+                                                  width=10)
+        self.ButtonChangeVersion.pack()
+        # 启动服务器 Button
         self.ButtonStartServer = tkinter.Button(self.root,
                                                 text='启动服务器',
-                                                command=self.start_server)
+                                                command=self.start_server,
+                                                width=10)
         self.ButtonStartServer.pack()
 
     def main(self):
@@ -614,6 +631,17 @@ class NewGUI:
 
     def start_server(self):
         self.sl_functions.runVersion(self.sl_functions.current_version)
+
+    def change_version(self):
+        self.ChangeVersionWindow = tkinter.Toplevel()
+        self.ChangeVersionWindow.title('切换版本')
+        self.ListBoxSelectVersion = tkinter.Listbox(self.ChangeVersionWindow)
+        self.versionList = self.sl_functions.getVersionList()
+        # print(self.versionList)
+        for temp in self.versionList:
+            self.ListBoxSelectVersion.insert('end', temp)
+        self.ListBoxSelectVersion.pack()
+
 
 
 def test():
@@ -624,7 +652,7 @@ def test():
         sl_gui.choose_function()
 
 
-def debug():
+def dev():
     sl_settings = ServerLauncherSettings()
     sl_functions = ServerLauncherFunctions(sl_settings)
     sl_functions.start()
@@ -635,5 +663,4 @@ def debug():
 if __name__ == '__main__':
     test()
 elif __name__ == 'main':
-    debug()
-
+    dev()
