@@ -621,6 +621,13 @@ class NewGUI:
                                                   width=30,
                                                   height=2)
         self.ButtonChangeVersion.pack()
+        # 下载服务器 Button
+        self.ButtonDownloadVersion = tkinter.Button(self.root,
+                                                    text='下载服务端',
+                                                    command=self.download_version_select_platform,
+                                                    width=30,
+                                                    height=2)
+        self.ButtonDownloadVersion.pack()
         # 启动服务器 Button
         self.ButtonStartServer = tkinter.Button(self.root,
                                                 text='启动服务器',
@@ -649,10 +656,29 @@ class NewGUI:
                                                         width=20,
                                                         height=2,
                                                         command=self.submitSelectVersion)
+        self.ButtonSelectVersionSubmit.pack()
 
     def submitSelectVersion(self):
-        pass
+        self.sl_functions.current_version = self.ListBoxSelectVersion.get(self.ListBoxSelectVersion.curselection())
+        self.ChangeVersionWindow.destroy()
 
+    def download_version_select_platform(self):
+        self.DownloadVersionPlatformWindow = tkinter.Toplevel()
+        self.DownloadVersionPlatformWindow.title('下载服务端')
+        self.ListBoxSelectDownloadPlatform = tkinter.Listbox(self.DownloadVersionPlatformWindow)
+        self.platform_list = self.sl_functions.sl_settings.source.keys()
+        for temp in self.platform_list:
+            self.ListBoxSelectDownloadPlatform.insert('end', temp)
+        self.ListBoxSelectDownloadPlatform.pack()
+        self.ButtonSelectDownloadPlatfrom = tkinter.Button(self.DownloadVersionPlatformWindow,
+                                                           text='确定',
+                                                           width=10,
+                                                           height=2,
+                                                           command=self.download_version_select_version)
+        self.ButtonSelectDownloadPlatfrom.pack()
+
+    def download_version_select_version(self):
+        pass
 
 
 def test():
