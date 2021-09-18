@@ -7,6 +7,7 @@ import os
 import re
 import shutil
 import sys
+import time
 import tkinter
 
 import easygui
@@ -596,6 +597,7 @@ class ServerLauncherGUI:
 class NewGUI:
     def __init__(self, sl_functions: ServerLauncherFunctions):
         self.sl_functions = sl_functions
+        self.got_link = False
         self.sl_functions.start()
         # 主窗口
         self.root = tkinter.Tk()
@@ -624,23 +626,20 @@ class NewGUI:
         # 下载服务器 Button
         self.ButtonDownloadVersion = tkinter.Button(self.root,
                                                     text='下载服务端',
-                                                    command=self.download_version_select_platform,
+                                                    command=self.download_version,
                                                     width=30,
                                                     height=2)
         self.ButtonDownloadVersion.pack()
         # 启动服务器 Button
         self.ButtonStartServer = tkinter.Button(self.root,
                                                 text='启动服务器',
-                                                command=self.start_server,
+                                                command=lambda: self.sl_functions.runVersion(self.sl_functions.current_version),
                                                 width=30,
                                                 height=2)
         self.ButtonStartServer.pack()
 
     def main(self):
         self.root.mainloop()
-
-    def start_server(self):
-        self.sl_functions.runVersion(self.sl_functions.current_version)
 
     def change_version(self):
         self.ChangeVersionWindow = tkinter.Toplevel()
@@ -662,31 +661,63 @@ class NewGUI:
         self.sl_functions.current_version = self.ListBoxSelectVersion.get(self.ListBoxSelectVersion.curselection())
         self.ChangeVersionWindow.destroy()
 
-    def download_version_select_platform(self):
-        self.DownloadVersionPlatformWindow = tkinter.Toplevel()
-        self.DownloadVersionPlatformWindow.title('下载服务端')
-        self.ListBoxSelectDownloadPlatform = tkinter.Listbox(self.DownloadVersionPlatformWindow)
+    def download_version(self):
+        self.DownloadVersionWindow = tkinter.Toplevel()
+        self.DownloadVersionsVar = tkinter.StringVar()
+        self.DownloadVersionWindow.title('下载服务端')
+        self.ListBoxSelectDownloadPlatform = tkinter.Listbox(self.DownloadVersionWindow)
         self.platform_list = self.sl_functions.sl_settings.source.keys()
         for temp in self.platform_list:
             self.ListBoxSelectDownloadPlatform.insert('end', temp)
+        self.ListBoxSelectDownloadPlatform.bind('<Double-Button-1>', self.update_download_version_var)
         self.ListBoxSelectDownloadPlatform.pack()
-        self.ButtonSelectDownloadPlatfrom = tkinter.Button(self.DownloadVersionPlatformWindow,
-                                                           text='确定',
-                                                           width=10,
-                                                           height=2,
-                                                           command=self.download_version_select_version)
-        self.ButtonSelectDownloadPlatfrom.pack()
+        self.ListBoxSelectDownloadVersion = tkinter.Listbox(self.DownloadVersionWindow,
+                                                            listvariable=self.DownloadVersionsVar)
+        self.ListBoxSelectDownloadVersion.pack()
+        self.download_link_handler = LinkHandler(self.sl_functions.sl_settings)
+        self.download_link_handler.resolveVanilla()
+        self.download_link_handler.resolveSpigot()
+        self.download_link_handler.resolveCraftBukkit()
+        self.got_link = True
+        self.ButtonStartDownload = tkinter.Button(self.DownloadVersionWindow,
+                                                  text='开始下载',
+                                                  width=20,
+                                                  height=2,
+                                                  command=self.download_version_start)
+        self.ButtonStartDownload.pack()
 
-    def download_version_select_version(self):
-        pass
+    def update_download_version_var(self, event):
+        self.DownloadVersionsVar.set(self.download_link_handler.versions[self.ListBoxSelectDownloadPlatform.get(self.ListBoxSelectDownloadPlatform.curselection())])
+
+    def download_version_start(self):
+        self.DownloadProgressWindow = tkinter.Toplevel()
+        self.DownloadProgressWindow.title('下载进度')
+        self.LabelDownloadProgressVar = tkinter.StringVar()
+        self.LabelDownloadProgress = tkinter.Label(self.DownloadProgressWindow,
+                                                   textvariable=self.LabelDownloadProgressVar,
+                                                   bg='white',
+                                                   fg='black',
+                                                   font=('Microsoft Yahei', 12),
+                                                   width=50,
+                                                   height=4)
+        self.LabelDownloadProgress.pack()
+        self.LabelDownloadProgressVar.set('test')
 
 
-def test():
+def OldGUI():
     sl_settings = ServerLauncherSettings()
     sl_functions = ServerLauncherFunctions(sl_settings)
     sl_gui = ServerLauncherGUI(sl_settings, sl_functions)
     while True:
         sl_gui.choose_function()
+
+
+def main():
+    sl_settings = ServerLauncherSettings()
+    sl_functions = ServerLauncherFunctions(sl_settings)
+    sl_functions.start()
+    sl_gui = NewGUI(sl_functions)
+    sl_gui.main()
 
 
 def dev():
@@ -698,6 +729,7 @@ def dev():
 
 
 if __name__ == '__main__':
-    dev()
+    main()
+
 elif __name__ == 'main':
     dev()
