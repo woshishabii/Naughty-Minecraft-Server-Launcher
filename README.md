@@ -52,9 +52,38 @@ beautifulsoup4 == 4.9.3
 - - [ ] CatServer
 - - [ ] Cauldron*
 - - [ ] KCauldron*
+- - [ ] LoliServer
+- - [ ] ArcLight
+- - [ ] Paper
+- - [ ] Akarin
+- - [ ] TorchSpigot
+- - [ ] Cuberite
+- - [ ] GlowStone
+- - [ ] Hose
+- - [ ] TacoSpigot
+- - [ ] MEENET
+- - [ ] SpongeVanilla
+- - [ ] SpongeForge
+- - [ ] Tuinity
+- - [ ] Purpur
+- - [ ] Airplane
+- - [ ] MCPC+
+- - [ ] Contigo
+- - [ ] Atom
+- - [ ] Kettle
+- - [ ] Magma
+- - [ ] Bedrock 服务端（？）
+- - [ ] PocketMine（？？？）
+- - [ ] MiNET（？？？？？）
+- - [ ] Nemisys（wtf）
+- - [ ] Nukkit / NukkitX （你tm故意找茬是吧）
+- - [ ] Terraria （？？？？？？？？？？）
 - [ ] Fabric 服务端配置
 - [ ] 使用pipeline进行接口调用、日志分析**
 - [ ] 重构
 - [ ] 更好的多版本设置（各个版本单独设置文件）
 - [ ] 多线程实装
 - [ ] 更加银杏的安装步骤（Much More Personalized Installation Guide --> MMP的安装）
+- [ ] 国内镜像源的使用
+- [ ] WaterFall / Velovity / BungeeCord / DragonProxy / HexaCord / Travertine / LilyPad
+- [ ] 内网穿透（frp）的部署
