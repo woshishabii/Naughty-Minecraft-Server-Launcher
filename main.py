@@ -688,6 +688,7 @@ class NewGUI:
 
     def update_download_version_var(self, event):
         self.DownloadVersionsVar.set(self.download_link_handler.versions[self.ListBoxSelectDownloadPlatform.get(self.ListBoxSelectDownloadPlatform.curselection())])
+        self.selected_platform = self.ListBoxSelectDownloadPlatform.get(self.ListBoxSelectDownloadPlatform.get(self.ListBoxSelectDownloadPlatform.curselection()))
 
     def download_version_start(self):
         self.DownloadProgressWindow = tkinter.Toplevel()
@@ -701,7 +702,8 @@ class NewGUI:
                                                    width=50,
                                                    height=4)
         self.LabelDownloadProgress.pack()
-        self.LabelDownloadProgressVar.set('test')
+        if self.selected_platform and self.ListBoxSelectDownloadVersion.get(self.ListBoxSelectDownloadVersion.curselection()):
+            print('yes')
 
 
 def OldGUI():
