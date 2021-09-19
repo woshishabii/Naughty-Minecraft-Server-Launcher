@@ -9,7 +9,7 @@
 ## 安装教程
 
 1.  下载/dist/Alpha0.0.1.exe
-``` python
+```
 包括所用功能的版本：/dist/Alpha0.0.1.exe
 测试杂七杂八功能的版本：/dist/Alpha0.0.3.exe
 ```
