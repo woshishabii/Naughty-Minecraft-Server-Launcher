@@ -7,6 +7,10 @@
 #### 安装教程
 
 1.  下载/dist/Alpha0.0.1.exe
+``` python
+包括所用功能的版本：/dist/Alpha0.0.1.exe
+测试杂七杂八功能的版本：/dist/Alpha0.0.3.exe
+```
 2.  下载后放至单独文件夹（建议），如有报毒请添加信任（如果不相信可以请别人读源代码
 3.  直接运行
 
@@ -22,7 +26,7 @@
 
 #### 库
 
-easygui == 0.98.2
+easygui == 0.98.2 (可能会被删除)
 
 requests == 2.26.0
 
@@ -30,10 +34,25 @@ beautifulsoup4 == 4.9.3
 
 #### 计划
 
-- [ ] Spigot 服务器配置修改
+- [ ] Spigot 服务器配置修改 (spigot.yml)
 - [ ] 新 GUI
 - [ ] Forge 服务端下载
 - [ ] MOD 网站解析 CurseForge
 - [ ] 插件网站解析 dev.bukkit
 - [ ] 世界编辑
 - [ ] java 配置
+- [ ] 新下载模块（多线程之类的）
+- [ ] Minecraft Daemon Reforged 支持
+- [ ] 各种奇奇怪怪的服务端下载解析
+- - [ ] Uranium
+- - [ ] Thermos
+- - [ ] Mohist
+- - [ ] CatServer
+- - [ ] Cauldron*
+- - [ ] KCauldron*
+- [ ] Fabric 服务端配置
+- [ ] 使用pipeline进行接口调用、日志分析**
+- [ ] 重构
+- [ ] 更好的多版本设置（各个版本单独设置文件）
+- [ ] 多线程实装
+- [ ] 更加银杏的安装步骤（Much More Personalized Installation Guide --> MMP的安装）
