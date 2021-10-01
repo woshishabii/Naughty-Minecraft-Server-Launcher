@@ -11,6 +11,8 @@ class ServerLauncherSettings:
         # 下载源 / Download Source
         self.sources = {
             'getbukkit-vanilla': 'https://getbukkit.org/download/vanilla',
+            'getbukkit-spigot': 'https://getbukkit.org/download/spigot',
+            'getbukkit-craftbukkit': 'https://getbukkit.org/download/craftbukkit',
         }
         # 原版服务器配置翻译 -> server.properties / Server Properties Translate
         self.vanillaConfigTranslate = {
