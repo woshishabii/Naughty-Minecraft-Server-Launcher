@@ -1,9 +1,9 @@
 class PropertyReader:
     def __init__(self, file_name):
-        self.fileName = file_name
-        self.values = {}
-        self.values_temp = []
-        self.read_all()
+        self.fileName = file_name            # properties文件名称
+        self.values = {}                     # 数据
+        self.values_temp = []                # 临时存储
+        self.read_all()                      # 读取文件
 
     def read_all(self):
         with open(self.fileName, 'r') as property:

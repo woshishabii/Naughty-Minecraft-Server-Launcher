@@ -6,8 +6,12 @@ class ServerLauncherSettings:
         self.author = 'woshishabi'
         # 用户界面设置 / GUI settings
         self.title = f'{self.name} {self.version}'
-        # 默认版本设置 / Default Versions Settings
+        # 默认版本目录 / Default Versions Directory
         self.versions_path = '.server'
+        # 下载源 / Download Source
+        self.sources = {
+            'getbukkit-vanilla': 'https://getbukkit.org/download/vanilla',
+        }
         # 原版服务器配置翻译 -> server.properties / Server Properties Translate
         self.vanillaConfigTranslate = {
             'enable-jmx-monitoring': '通过JMX检测服务器每刻耗时',
