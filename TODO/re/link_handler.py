@@ -1,4 +1,6 @@
 import requests
+from bs4 import BeautifulSoup
+import re
 
 from settings import ServerLauncherSettings
 
@@ -8,8 +10,48 @@ class LinkHandler:
 
         self.requests_object = {}
         self.beautifulsoup_object = {}
+        self.versions = {}
+
+        self.weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
     def get_vanilla_link_list_via_getbukkit(self):
-        self.requests_object['getbukkit-vaniila'] = requests.get(self.sl_settings.sources['getbukkit-vanilla'])
+        self.requests_object['getbukkit-vanilla'] = requests.get(self.sl_settings.sources['getbukkit-vanilla'])
         # TODO LOG
-        self.beautifulsoup_object['getbukkit-vanilla'] =
+        self.beautifulsoup_object['getbukkit-vanilla'] = BeautifulSoup(self.requests_object['getbukkit-vanilla'].text,
+                                                                       'html.parser')
+        self.versions_temp = []
+        for temp in self.beautifulsoup_object['getbukkit-vanilla'].find_all('h2'):
+            self.versions_temp.append(str(temp)[4:-5])
+        self.sizes_temp = []
+        self.release_data_temp = []
+        for temp in self.beautifulsoup_object['getbukkit-vanilla'].find_all('h3'):
+            temp = str(temp)[4:-5]
+            if temp.endswith('MB'):
+                self.sizes_temp.append(temp)
+            else:
+                for weekday in self.weekdays:
+                    if weekday in temp:
+                        self.release_data_temp.append(temp)
+                        break
+        self.getbukkit_link_temp = []
+        for temp in self.beautifulsoup_object['getbukkit-vanilla'].find_all('a'):
+            if temp.get('href').startswith('https://getbukkit.org/get'):
+                self.getbukkit_link_temp.append(temp.get('href'))
+        self.download_link_temp = []
+        for temp in self.getbukkit_link_temp:
+            self.getbukkit_link_request_temp = requests.get(temp)
+            self.getbukkit_link_beautifulsoup_temp = BeautifulSoup(self.getbukkit_link_request_temp.text, 'html.parser')
+            for temp in self.getbukkit_link_beautifulsoup_temp.find_all('a'):
+                if (temp.get('href').startswith('https://launcher.mojang.com/v1/objects/')
+                        or temp.get('href').startswith('https://download.getbukkit.org/spigot/')
+                        or temp.get('href').startswith('https://download.getbukkit.org/craftbukkit/')
+                        or temp.get('href').startswith('https://cdn.getbukkit.org/craftbukkit/')
+                        or temp.get('href').startswith('https://cdn.getbukkit.org/spigot')
+                        or temp.get('href').startswith('https://launcher.mojang.com/mc/game/')):
+                    self.download_link_temp.append(temp.get('href'))
+        for temp in range(len(self.versions_temp)):
+            print(self.versions_temp[temp])
+
+sl_settings = ServerLauncherSettings()
+test = LinkHandler(sl_settings)
+test.get_vanilla_link_list_via_getbukkit()
