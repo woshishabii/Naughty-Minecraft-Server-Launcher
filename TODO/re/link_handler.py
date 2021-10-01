@@ -150,9 +150,9 @@ class LinkHandler:
                 'link': self.download_link_temp[temp],
             }
 
-sl_settings = ServerLauncherSettings()
-test = LinkHandler(sl_settings)
+# sl_settings = ServerLauncherSettings()
+# test = LinkHandler(sl_settings)
 # test.get_vanilla_link_list_via_getbukkit()
 # test.get_spigot_link_list_via_getbukkit()
-test.get_craftbukkit_link_list_via_getbukkit()
-print(test.versions)
+# test.get_craftbukkit_link_list_via_getbukkit()
+# print(test.versions)
