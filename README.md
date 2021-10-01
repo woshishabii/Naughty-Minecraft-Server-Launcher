@@ -87,3 +87,11 @@ beautifulsoup4 == 4.9.3
 - [ ] 国内镜像源的使用
 - [ ] WaterFall / Velovity / BungeeCord / DragonProxy / HexaCord / Travertine / LilyPad
 - [ ] 内网穿透（frp）的部署
+- [ ] 自动导出客户端
+- [ ] Geyser
+- [ ] 模组支持
+- - [ ] Forge
+- - [ ] Fabric
+- - [ ] LiteLoader
+- - [ ] Git Pages 源
+- - [ ] 地图编辑 Amulet
