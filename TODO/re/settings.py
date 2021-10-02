@@ -1,7 +1,7 @@
 class ServerLauncherSettings:
     def __init__(self):
         # 项目信息 / Projct Info
-        self.version = ['ALpha', '0.0.3']
+        self.version = ['ALpha', '0.0.4']
         self.name = 'Naughty Minecraft Server Launcher'
         self.author = 'woshishabi'
         # 用户界面设置 / GUI settings

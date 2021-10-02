@@ -2,6 +2,7 @@ import tkinter
 import os
 
 import settings
+import link_handler
 
 class ServerLauncherGUI:
     def __init__(self, sl_settings: settings.ServerLauncherSettings):
@@ -46,8 +47,7 @@ class ServerLauncherGUI:
         # 启动服务器 Button
         self.ButtonStartServer = tkinter.Button(self.root,
                                                 text='启动服务器',
-                                                command=lambda: self.sl_functions.runVersion(
-                                                    self.sl_functions.current_version),
+                                                command=self.run_version,
                                                 width=30,
                                                 height=2)
         self.ButtonStartServer.pack()
@@ -70,4 +70,45 @@ class ServerLauncherGUI:
 
     def submitSelectVersion(self):
         self.current_version = self.ListBoxSelectVersion.get(self.ListBoxSelectVersion.curselection())
+        self.currentVersionVar.set(f'当前版本：{self.current_version}')
         self.ChangeVersionWindow.destroy()
+
+    def download_version(self):
+        self.DownloadVersionWindow = tkinter.Toplevel()
+        self.DownloadVersionsVar = tkinter.StringVar()
+        self.DownloadVersionWindow.title('下载服务端')
+        self.ListBoxSelectDownloadPlatform = tkinter.Listbox(self.DownloadVersionWindow)
+        self.platform_list = self.sl_settings.sources.keys()
+        for temp in self.platform_list:
+            self.ListBoxSelectDownloadPlatform.insert('end', temp)
+        self.ListBoxSelectDownloadPlatform.bind('<Double-Button-1>', self.update_download_version_var)
+        self.ListBoxSelectDownloadPlatform.pack()
+        self.ListBoxSelectDownloadVersion = tkinter.Listbox(self.DownloadVersionWindow,
+                                                            listvariable=self.DownloadVersionsVar)
+        self.ListBoxSelectDownloadVersion.pack()
+        self.download_link_handler = link_handler.LinkHandler(self.sl_settings)
+        self.ButtonStartDownload = tkinter.Button(self.DownloadVersionWindow,
+                                                  text='开始下载',
+                                                  width=20,
+                                                  height=2,
+                                                  command=self.download_version_start)
+        self.ButtonStartDownload.pack()
+
+    def update_download_version_var(self, event):
+        self.platform_choice = self.ListBoxSelectDownloadPlatform.get(self.ListBoxSelectDownloadPlatform.curselection())
+        if self.platform_choice == 'getbukkit-vanilla':
+            pass
+        elif self.platform_choice == 'getbukkit-spigot':
+            pass
+        elif self.platform_choice == 'getbukkit-craftbukkit':
+            pass
+
+    def download_version_start(self):
+        pass
+
+    def run_version(self):
+        pass
+
+sl_settings = settings.ServerLauncherSettings()
+test = ServerLauncherGUI(sl_settings)
+test.root.mainloop()
