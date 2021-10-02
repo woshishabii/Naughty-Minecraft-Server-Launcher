@@ -16,7 +16,7 @@ class LinkHandler:
 
     def get_vanilla_link_list_via_getbukkit(self):
         self.requests_object['getbukkit-vanilla'] = requests.get(self.sl_settings.sources['getbukkit-vanilla'])
-        # TODO LOG
+        print('[LOG]', 'Getbukkit page got! Status: ', self.requests_object['getbukkit-vanilla'].status_code)
         self.beautifulsoup_object['getbukkit-vanilla'] = BeautifulSoup(self.requests_object['getbukkit-vanilla'].text,
                                                                        'html.parser')
         self.versions_temp = []
@@ -48,6 +48,7 @@ class LinkHandler:
                         or temp.get('href').startswith('https://cdn.getbukkit.org/craftbukkit/')
                         or temp.get('href').startswith('https://cdn.getbukkit.org/spigot')
                         or temp.get('href').startswith('https://launcher.mojang.com/mc/game/')):
+                    print(temp.get('href'))
                     self.download_link_temp.append(temp.get('href'))
         self.versions['getbukkit-vanilla'] = {}
         for temp in range(len(self.versions_temp)):

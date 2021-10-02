@@ -97,7 +97,8 @@ class ServerLauncherGUI:
     def update_download_version_var(self, event):
         self.platform_choice = self.ListBoxSelectDownloadPlatform.get(self.ListBoxSelectDownloadPlatform.curselection())
         if self.platform_choice == 'getbukkit-vanilla':
-            pass
+            self.download_link_handler.get_vanilla_link_list_via_getbukkit()
+            self.DownloadVersionsVar.set(list(self.download_link_handler.versions['getbukkit-vanilla'].keys()))
         elif self.platform_choice == 'getbukkit-spigot':
             pass
         elif self.platform_choice == 'getbukkit-craftbukkit':
