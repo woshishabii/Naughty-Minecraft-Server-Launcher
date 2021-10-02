@@ -10,6 +10,7 @@ class ServerLauncherSettings:
         self.versions_path = '.server'
         # 下载源 / Download Source
         self.sources = {
+            'mojang-vanilla': 'https://launchermeta.mojang.com/mc/game/version_manifest.json',
             'getbukkit-vanilla': 'https://getbukkit.org/download/vanilla',
             'getbukkit-spigot': 'https://getbukkit.org/download/spigot',
             'getbukkit-craftbukkit': 'https://getbukkit.org/download/craftbukkit',

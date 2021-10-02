@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import re
+import json
 
 from settings import ServerLauncherSettings
 
@@ -151,9 +152,15 @@ class LinkHandler:
                 'link': self.download_link_temp[temp],
             }
 
-# sl_settings = ServerLauncherSettings()
-# test = LinkHandler(sl_settings)
+    def get_vanilla_link_list_via_mojang(self):
+        self.versions_manifest_json_temp = requests.get(self.sl_settings.sources['mojang-vanilla'])
+        text = json.loads(self.versions_manifest_json_temp.text)
+        print(type(text))
+
+sl_settings = ServerLauncherSettings()
+test = LinkHandler(sl_settings)
 # test.get_vanilla_link_list_via_getbukkit()
 # test.get_spigot_link_list_via_getbukkit()
 # test.get_craftbukkit_link_list_via_getbukkit()
+test.get_vanilla_link_list_via_mojang()
 # print(test.versions)
