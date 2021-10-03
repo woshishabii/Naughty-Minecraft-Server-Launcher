@@ -8,8 +8,11 @@ class ServerLauncherGUI:
     def __init__(self, sl_settings: settings.ServerLauncherSettings):
         self.sl_settings = sl_settings
 
+        if not os.path.exists(self.sl_settings.versions_path):
+            os.mkdir(self.sl_settings.versions_path)
 
         self.versions = os.listdir(self.sl_settings.versions_path)
+
         if len(self.versions):
             self.current_version = self.versions[0]
         else:
@@ -116,6 +119,3 @@ class ServerLauncherGUI:
     def run_version(self):
         pass
 
-sl_settings = settings.ServerLauncherSettings()
-test = ServerLauncherGUI(sl_settings)
-test.root.mainloop()
