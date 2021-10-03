@@ -77,19 +77,20 @@ class ServerLauncherGUI:
         self.DownloadVersionWindow = tkinter.Toplevel()
         self.DownloadVersionsVar = tkinter.StringVar()
         self.DownloadVersionWindow.title('下载服务端')
-        self.ListBoxSelectDownloadPlatform = tkinter.Listbox(self.DownloadVersionWindow)
-        self.platform_list = self.sl_settings.sources.keys()
-        for temp in self.platform_list:
+        self.ListBoxSelectDownloadPlatform = tkinter.Listbox(self.DownloadVersionWindow,
+                                                             width=30)
+        self.download_link_handler = link_handler.LinkHandler(self.sl_settings)
+        for temp in self.download_link_handler.available_sources:
             self.ListBoxSelectDownloadPlatform.insert('end', temp)
         self.ListBoxSelectDownloadPlatform.bind('<Double-Button-1>', self.update_download_version_var)
         self.ListBoxSelectDownloadPlatform.pack()
         self.ListBoxSelectDownloadVersion = tkinter.Listbox(self.DownloadVersionWindow,
-                                                            listvariable=self.DownloadVersionsVar)
+                                                            listvariable=self.DownloadVersionsVar,
+                                                            width=30)
         self.ListBoxSelectDownloadVersion.pack()
-        self.download_link_handler = link_handler.LinkHandler(self.sl_settings)
         self.ButtonStartDownload = tkinter.Button(self.DownloadVersionWindow,
                                                   text='开始下载',
-                                                  width=20,
+                                                  width=30,
                                                   height=2,
                                                   command=self.download_version_start)
         self.ButtonStartDownload.pack()
@@ -105,6 +106,9 @@ class ServerLauncherGUI:
         elif self.platform_choice == 'getbukkit-craftbukkit':
             self.download_link_handler.get_craftbukkit_link_list_via_getbukkit()
             self.DownloadVersionsVar.set(list(self.download_link_handler.versions['getbukkit-craftbukkit'].keys()))
+        elif self.platform_choice in ['mojang-vanilla-old_alpha', 'mojang-vanilla-snapshot', 'mojang-vanilla-release']:
+            self.download_link_handler.get_vanilla_link_list_via_mojang()
+            self.DownloadVersionsVar.set(list(self.download_link_handler.versions[self.platform_choice]))
 
     def download_version_start(self):
         pass

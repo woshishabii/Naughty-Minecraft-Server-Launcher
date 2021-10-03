@@ -15,6 +15,14 @@ class LinkHandler:
         self.versions = {}
 
         self.weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+        self.available_sources = [
+            'getbukkit-vanilla',
+            'getbukkit-spigot',
+            'getbukkit-craftbukkit',
+            'mojang-vanilla-old_alpha',
+            'mojang-vanilla-snapshot',
+            'mojang-vanilla-release',
+        ]
 
     def get_vanilla_link_list_via_getbukkit(self):
         self.requests_object['getbukkit-vanilla'] = requests.get(self.sl_settings.sources['getbukkit-vanilla'])
@@ -168,7 +176,7 @@ class LinkHandler:
         self.versions['mojang-vanilla-snapshot'] = {}
         self.versions['mojang-vanilla-release'] = {}
         for temp in self.versions_manifest_json['versions']:
-            print(temp)
+            # print(temp)
             if temp['type'] == 'old_alpha':
                 self.versions['mojang-vanilla-old_alpha'][temp['id']] = {
                     'release-data': temp['releaseTime'],
@@ -186,11 +194,11 @@ class LinkHandler:
                 }
 
 
-sl_settings = ServerLauncherSettings()
-test = LinkHandler(sl_settings)
+# sl_settings = ServerLauncherSettings()
+# test = LinkHandler(sl_settings)
 # test.get_vanilla_link_list_via_getbukkit()
 # test.get_spigot_link_list_via_getbukkit()
 # test.get_craftbukkit_link_list_via_getbukkit()
-test.get_vanilla_link_list_via_mojang()
-print(test.versions)
-print(len(test.versions['mojang-vanilla-release']))
+# test.get_vanilla_link_list_via_mojang()
+# print(test.versions)
+# print(len(test.versions['mojang-vanilla-release']))
