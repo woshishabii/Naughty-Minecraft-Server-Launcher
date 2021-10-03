@@ -38,7 +38,8 @@ class LinkHandler:
         for temp in self.beautifulsoup_object['getbukkit-vanilla'].find_all('a'):
             if temp.get('href').startswith('https://getbukkit.org/get'):
                 self.getbukkit_link_temp.append(temp.get('href'))
-        self.download_link_temp = []
+        # self.download_link_temp = []
+        '''
         for temp in self.getbukkit_link_temp:
             self.getbukkit_link_request_temp = requests.get(temp)
             self.getbukkit_link_beautifulsoup_temp = BeautifulSoup(self.getbukkit_link_request_temp.text, 'html.parser')
@@ -51,13 +52,14 @@ class LinkHandler:
                         or temp.get('href').startswith('https://launcher.mojang.com/mc/game/')):
                     print(temp.get('href'))
                     self.download_link_temp.append(temp.get('href'))
+        '''
         self.versions['getbukkit-vanilla'] = {}
         for temp in range(len(self.versions_temp)):
             # print(self.versions_temp[temp])
             self.versions['getbukkit-vanilla'][self.versions_temp[temp]] = {
                 'size': self.sizes_temp[temp],
                 'release-data': self.release_data_temp[temp],
-                'link': self.download_link_temp[temp],
+                'page-link': self.getbukkit_link_temp[temp],
             }
 
     def get_spigot_link_list_via_getbukkit(self):
@@ -154,8 +156,29 @@ class LinkHandler:
 
     def get_vanilla_link_list_via_mojang(self):
         self.versions_manifest_json_temp = requests.get(self.sl_settings.sources['mojang-vanilla'])
-        text = json.loads(self.versions_manifest_json_temp.text)
-        print(type(text))
+        self.versions_manifest_json = json.loads(self.versions_manifest_json_temp.text)
+        # print(len(self.versions_manifest_json['versions']))
+        self.versions['mojang-vanilla-old_alpha'] = {}
+        self.versions['mojang-vanilla-snapshot'] = {}
+        self.versions['mojang-vanilla-release'] = {}
+        for temp in self.versions_manifest_json['versions']:
+            print(temp)
+            if temp['type'] == 'old_alpha':
+                self.versions['mojang-vanilla-old_alpha'][temp['id']] = {
+                    'release-data': temp['releaseTime'],
+                    'json-link': temp['url'],
+                }
+            elif temp['type'] == 'snapshot':
+                self.versions['mojang-vanilla-snapshot'][temp['id']] = {
+                    'release-data': temp['releaseTime'],
+                    'json-link': temp['url'],
+                }
+            elif temp['type'] == 'release':
+                self.versions['mojang-vanilla-release'][temp['id']] = {
+                    'release-data': temp['releaseTime'],
+                    'json-link': temp['url'],
+                }
+
 
 sl_settings = ServerLauncherSettings()
 test = LinkHandler(sl_settings)
@@ -163,4 +186,5 @@ test = LinkHandler(sl_settings)
 # test.get_spigot_link_list_via_getbukkit()
 # test.get_craftbukkit_link_list_via_getbukkit()
 test.get_vanilla_link_list_via_mojang()
-# print(test.versions)
+print(test.versions)
+print(len(test.versions['mojang-vanilla-release']))
