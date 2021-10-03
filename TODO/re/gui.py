@@ -100,9 +100,11 @@ class ServerLauncherGUI:
             self.download_link_handler.get_vanilla_link_list_via_getbukkit()
             self.DownloadVersionsVar.set(list(self.download_link_handler.versions['getbukkit-vanilla'].keys()))
         elif self.platform_choice == 'getbukkit-spigot':
-            pass
+            self.download_link_handler.get_spigot_link_list_via_getbukkit()
+            self.DownloadVersionsVar.set(list(self.download_link_handler.versions['getbukkit-spigot'].keys()))
         elif self.platform_choice == 'getbukkit-craftbukkit':
-            pass
+            self.download_link_handler.get_craftbukkit_link_list_via_getbukkit()
+            self.DownloadVersionsVar.set(list(self.download_link_handler.versions['getbukkit-craftbukkit'].keys()))
 
     def download_version_start(self):
         pass

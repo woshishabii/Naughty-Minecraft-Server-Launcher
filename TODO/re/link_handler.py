@@ -5,6 +5,7 @@ import json
 
 from settings import ServerLauncherSettings
 
+
 class LinkHandler:
     def __init__(self, sl_settings: ServerLauncherSettings):
         self.sl_settings = sl_settings
@@ -64,9 +65,9 @@ class LinkHandler:
 
     def get_spigot_link_list_via_getbukkit(self):
         self.requests_object['getbukkit-spigot'] = requests.get(self.sl_settings.sources['getbukkit-spigot'])
-        # TODO LOG
+        print('[LOG]', 'Getbukkit page got! Status: ', self.requests_object['getbukkit-spigot'].status_code)
         self.beautifulsoup_object['getbukkit-spigot'] = BeautifulSoup(self.requests_object['getbukkit-spigot'].text,
-                                                                       'html.parser')
+                                                                      'html.parser')
         self.versions_temp = []
         for temp in self.beautifulsoup_object['getbukkit-spigot'].find_all('h2'):
             self.versions_temp.append(str(temp)[4:-5])
@@ -87,6 +88,7 @@ class LinkHandler:
         for temp in self.beautifulsoup_object['getbukkit-spigot'].find_all('a'):
             if temp.get('href').startswith('https://getbukkit.org/get'):
                 self.getbukkit_link_temp.append(temp.get('href'))
+        '''
         self.download_link_temp = []
         for temp in self.getbukkit_link_temp:
             self.getbukkit_link_request_temp = requests.get(temp)
@@ -99,6 +101,7 @@ class LinkHandler:
                         or temp.get('href').startswith('https://cdn.getbukkit.org/spigot')
                         or temp.get('href').startswith('https://launcher.mojang.com/mc/game/')):
                     self.download_link_temp.append(temp.get('href'))
+        '''
         self.versions['getbukkit-spigot'] = {}
         for temp in range(len(self.versions_temp)):
             # print(self.versions_temp[temp])
@@ -106,14 +109,15 @@ class LinkHandler:
             self.versions['getbukkit-spigot'][self.versions_temp[temp]] = {
                 'size': self.sizes_temp[temp],
                 'release-data': self.release_data_temp[temp],
-                'link': self.download_link_temp[temp],
+                'page-link': self.getbukkit_link_temp[temp],
             }
 
     def get_craftbukkit_link_list_via_getbukkit(self):
         self.requests_object['getbukkit-craftbukkit'] = requests.get(self.sl_settings.sources['getbukkit-craftbukkit'])
-        # TODO LOG
-        self.beautifulsoup_object['getbukkit-craftbukkit'] = BeautifulSoup(self.requests_object['getbukkit-craftbukkit'].text,
-                                                                       'html.parser')
+        print('[LOG]', 'Getbukkit page got! Status: ', self.requests_object['getbukkit-craftbukkit'].status_code)
+        self.beautifulsoup_object['getbukkit-craftbukkit'] = BeautifulSoup(
+            self.requests_object['getbukkit-craftbukkit'].text,
+            'html.parser')
         self.versions_temp = []
         for temp in self.beautifulsoup_object['getbukkit-craftbukkit'].find_all('h2'):
             self.versions_temp.append(str(temp)[4:-5])
@@ -132,6 +136,7 @@ class LinkHandler:
         for temp in self.beautifulsoup_object['getbukkit-craftbukkit'].find_all('a'):
             if temp.get('href').startswith('https://getbukkit.org/get'):
                 self.getbukkit_link_temp.append(temp.get('href'))
+        '''
         self.download_link_temp = []
         for temp in self.getbukkit_link_temp:
             self.getbukkit_link_request_temp = requests.get(temp)
@@ -144,6 +149,7 @@ class LinkHandler:
                         or temp.get('href').startswith('https://cdn.getbukkit.org/spigot')
                         or temp.get('href').startswith('https://launcher.mojang.com/mc/game/')):
                     self.download_link_temp.append(temp.get('href'))
+        '''
         self.versions['getbukkit-craftbukkit'] = {}
         for temp in range(len(self.versions_temp)):
             # print(self.versions_temp[temp])
@@ -151,7 +157,7 @@ class LinkHandler:
             self.versions['getbukkit-craftbukkit'][self.versions_temp[temp]] = {
                 'size': self.sizes_temp[temp],
                 'release-data': self.release_data_temp[temp],
-                'link': self.download_link_temp[temp],
+                'page-link': self.getbukkit_link_temp[temp],
             }
 
     def get_vanilla_link_list_via_mojang(self):
