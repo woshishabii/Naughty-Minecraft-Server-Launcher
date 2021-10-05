@@ -1,5 +1,6 @@
 import time
 import tkinter
+import tkinter.messagebox
 import os
 import requests
 from bs4 import BeautifulSoup
@@ -144,10 +145,20 @@ class ServerLauncherGUI:
                                                                     bg='white')
                 self.DownloadVersionProgressCanvas.place(x=110, y=60)
                 self.DownloadVersionProgressBar = self.DownloadVersionProgressCanvas.create_rectangle(1.5, 1.5, 0, 23, width=0, fill="green")
-                x = 1000
-                n = 465 / x
-                for temp in range(x):
-                    pass
+                self.DownloadVersionName = easygui.enterbox(msg='输入新版本名称：', title='下载新版本', default=f'{self.platform_choice[10:]}-{self.version_choice}')
+                if self.DownloadVersionName == None:
+                    self.DownloadVersionProgressWindow.destroy()
+                    self.DownloadVersionWindow.destroy()
+                    return
+                try:
+                    os.mkdir(f'{self.sl_settings.versions_path}/{self.DownloadVersionName}')
+                    os.mkdir(f'{self.sl_settings.versions_path}/{self.DownloadVersionName}/server')
+                except:
+                    tkinter.messagebox.showerror(title='文件夹已存在', message=f'{self.DownloadVersionName}已存在')
+                    self.DownloadVersionProgressWindow.destroy()
+                    self.DownloadVersionWindow.destroy()
+                    return
+
 
 
     def run_version(self):
