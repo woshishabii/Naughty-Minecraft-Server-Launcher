@@ -1,5 +1,9 @@
+import time
 import tkinter
 import os
+import requests
+from bs4 import BeautifulSoup
+import easygui
 
 import settings
 import link_handler
@@ -114,8 +118,44 @@ class ServerLauncherGUI:
             self.DownloadVersionsVar.set(list(self.download_link_handler.versions[self.platform_choice]))
 
     def download_version_start(self):
-        pass
+        self.version_choice = self.ListBoxSelectDownloadVersion.get(self.ListBoxSelectDownloadVersion.curselection())
+
+        if self.platform_choice in ['getbukkit-vanilla', 'getbukkit-spigot', 'getbukkit-craftbukkit']:
+            self.getbukkit_request = requests.get(self.download_link_handler.versions[self.platform_choice][self.version_choice]['page-link'])
+            self.getbukkit_soup = BeautifulSoup(self.getbukkit_request.text, 'html.parser')
+            for temp in self.getbukkit_soup.find_all('a'):
+                if (temp.get('href').startswith('https://launcher.mojang.com/v1/objects/')
+                    or temp.get('href').startswith('https://download.getbukkit.org/spigot/')
+                    or temp.get('href').startswith('https://download.getbukkit.org/craftbukkit/')
+                    or temp.get('href').startswith('https://cdn.getbukkit.org/craftbukkit/')
+                    or temp.get('href').startswith('https://cdn.getbukkit.org/spigot')
+                    or temp.get('href').startswith('https://launcher.mojang.com/mc/game/')):
+                    self.download_request = requests.get(temp.get('href'), stream=True)
+                    break
+            if self.download_request.status_code == 200:
+                self.DownloadVersionProgressWindow = tkinter.Toplevel()
+                self.DownloadVersionProgressWindow.title(f'正在下载：{self.platform_choice} - {self.version_choice}')
+                self.DownloadVersionProgressWindow.geometry('630x150')
+                self.DownloadVersionProgressLabel = tkinter.Label(self.DownloadVersionProgressWindow, text='下载进度')
+                self.DownloadVersionProgressLabel.place(x=50, y=60)
+                self.DownloadVersionProgressCanvas = tkinter.Canvas(self.DownloadVersionProgressWindow,
+                                                                    width=465,
+                                                                    height=22,
+                                                                    bg='white')
+                self.DownloadVersionProgressCanvas.place(x=110, y=60)
+                self.DownloadVersionProgressBar = self.DownloadVersionProgressCanvas.create_rectangle(1.5, 1.5, 0, 23, width=0, fill="green")
+                x = 1000
+                n = 465 / x
+                for temp in range(x):
+                    pass
+
 
     def run_version(self):
-        pass
+        if self.current_version == None:
+            return
+        else:
+            self.working_directory = os.getcwd()
+            os.chdir(f'{self.sl_settings.versions_path}/{self.current_version}/server')
+            os.system(f'start {self.sl_settings.java_path} -Xms1G -Xmx2G -jar {self.current_version}.jar nogui')
+            os.chdir(self.working_directory)
 

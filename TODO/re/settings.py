@@ -8,6 +8,8 @@ class ServerLauncherSettings:
         self.title = f'{self.name} {self.version}'
         # 默认版本目录 / Default Versions Directory
         self.versions_path = '.server'
+        # Java 路径 / Java Path
+        self.java_path = 'java'
         # 下载源 / Download Source
         self.sources = {
             'mojang-vanilla': 'https://launchermeta.mojang.com/mc/game/version_manifest.json',

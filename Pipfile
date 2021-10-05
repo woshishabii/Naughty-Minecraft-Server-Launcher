@@ -6,8 +6,10 @@ name = "pypi"
 [packages]
 easygui = "*"
 requests = "*"
-beautifulsoup4 = "*"
+beautifulsoup4 = "==4.10.0"
 pyyaml = "*"
+multitasking = "*"
+retry = "*"
 
 [dev-packages]
 
