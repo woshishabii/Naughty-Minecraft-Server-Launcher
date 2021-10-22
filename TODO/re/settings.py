@@ -1,5 +1,10 @@
 class ServerLauncherSettings:
     def __init__(self):
+        self.basic_settings()
+        self.net()
+        self.translations()
+
+    def basic_settings(self):
         # 项目信息 / Projct Info
         self.version = ['ALpha', '0.0.4']
         self.name = 'Naughty Minecraft Server Launcher'
@@ -10,6 +15,8 @@ class ServerLauncherSettings:
         self.versions_path = '.server'
         # Java 路径 / Java Path
         self.java_path = 'java'
+
+    def net(self):
         # 下载源 / Download Source
         self.sources = {
             'mojang-vanilla': 'https://launchermeta.mojang.com/mc/game/version_manifest.json',
@@ -17,6 +24,8 @@ class ServerLauncherSettings:
             'getbukkit-spigot': 'https://getbukkit.org/download/spigot',
             'getbukkit-craftbukkit': 'https://getbukkit.org/download/craftbukkit',
         }
+
+    def translations(self):
         # 原版服务器配置翻译 -> server.properties / Server Properties Translate
         self.vanillaConfigTranslate = {
             'enable-jmx-monitoring': '通过JMX检测服务器每刻耗时',

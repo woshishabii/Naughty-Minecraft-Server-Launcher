@@ -134,6 +134,7 @@ class ServerLauncherGUI:
                     self.download_request = requests.get(temp.get('href'), stream=True)
                     break
             if self.download_request.status_code == 200:
+
                 '''
                 self.DownloadVersionProgressWindow = tkinter.Toplevel()
                 self.DownloadVersionProgressWindow.title(f'正在下载：{self.platform_choice} - {self.version_choice}')
@@ -160,6 +161,7 @@ class ServerLauncherGUI:
                     self.DownloadVersionWindow.destroy()
                     return
                 '''
+
 
 
     def run_version(self):
