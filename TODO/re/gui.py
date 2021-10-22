@@ -8,9 +8,12 @@ import easygui
 from retry import retry
 import multitasking
 import signal
+from tqdm import tqdm
 
 import settings
 import link_handler
+
+signal.signal(signal.SIGINT, multitasking.killall)
 
 class ServerLauncherGUI:
     def __init__(self, sl_settings: settings.ServerLauncherSettings):
@@ -157,8 +160,13 @@ class ServerLauncherGUI:
                     if (self.size == None) and (raise_error == True):
                         raise ValueError('该文件不支持多线程分段下载！')
                     return int(self.size)
-                self.f = open(f'{self.sl_settings.versions_path}/{self.server_name}/server/{self.server_name}.jar', 'wb')
+                self.f = open(f'{self.sl_settings.versions_path}/{self.DownloadVersionName}/server/{self.DownloadVersionName}.jar', 'wb')
                 self.file_size = get_file_size(temp.get('href'))
+
+                def split(start: int, end: int, step: int) -> list[tuple[int, int]]:
+                    parts = [(start, min(start+step, end))
+                             for start in range(0, end, step)]
+                    return parts
 
                 @retry(tries=self.sl_settings.retries)
                 @multitasking.task
@@ -169,15 +177,25 @@ class ServerLauncherGUI:
                     chunks = []
                     for chunk in self.response.iter_content(chunk_size=self.sl_settings.chunk_size):
                         chunks.append(chunk)
-                        print(self.sl_settings.chunk_size)
+                        bar.update(self.sl_settings.chunk_size)
+                        # print(self.file_size)
                     self.f.seek(start)
                     for chunk in chunks:
                         self.f.write(chunk)
                     del chunks
 
                 session = requests.Session()
-                each_size = min(each_size, self.file_size)
-
+                each_size = min(self.sl_settings.each_size, self.file_size)
+                parts = split(0, self.file_size, each_size)
+                print('[LOG]', f'分块数：{len(parts)}')
+                bar = tqdm(total=self.file_size, desc=f'下载文件：{self.DownloadVersionName}')
+                for part in parts:
+                    start, end = part
+                    start_download(start, end)
+                multitasking.wait_for_tasks()
+                self.f.close()
+                bar.close()
+                self.DownloadVersionWindow.destroy()
                 '''
                 self.DownloadVersionProgressWindow = tkinter.Toplevel()
                 self.DownloadVersionProgressWindow.title(f'正在下载：{self.platform_choice} - {self.version_choice}')
