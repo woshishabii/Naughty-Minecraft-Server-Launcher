@@ -5,8 +5,8 @@ class ServerLauncherSettings:
         self.translations()
 
     def basic_settings(self):
-        # 项目信息 / Projct Info
-        self.version = ['ALpha', '0.0.4']
+        # 项目信息 / Project Info
+        self.version = ['Alpha', '0.0.4']
         self.name = 'Naughty Minecraft Server Launcher'
         self.author = 'woshishabi'
         # 用户界面设置 / GUI settings
@@ -15,6 +15,8 @@ class ServerLauncherSettings:
         self.versions_path = '.server'
         # Java 路径 / Java Path
         self.java_path = 'java'
+        # 文件大小换算关系 / File Size Conversion Relation
+        self.MB = 1024 ** 2
 
     def net(self):
         # 下载源 / Download Source
@@ -24,6 +26,16 @@ class ServerLauncherSettings:
             'getbukkit-spigot': 'https://getbukkit.org/download/spigot',
             'getbukkit-craftbukkit': 'https://getbukkit.org/download/craftbukkit',
         }
+        # 访问 UA / Request User Agent
+        self.headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36 QIHU 360SE'
+        }
+        # 重试次数 / Retry Times
+        self.retries = 3
+        # 每次读取流式响应大小
+        self.chunk_size = 128
+        # 分块大小 / Each Chunk Size
+        self.each_size = 2*self.MB
 
     def translations(self):
         # 原版服务器配置翻译 -> server.properties / Server Properties Translate

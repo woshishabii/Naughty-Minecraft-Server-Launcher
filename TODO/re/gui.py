@@ -5,6 +5,9 @@ import os
 import requests
 from bs4 import BeautifulSoup
 import easygui
+from retry import retry
+import multitasking
+import signal
 
 import settings
 import link_handler
@@ -134,6 +137,46 @@ class ServerLauncherGUI:
                     self.download_request = requests.get(temp.get('href'), stream=True)
                     break
             if self.download_request.status_code == 200:
+                self.DownloadVersionName = easygui.enterbox(msg='输入新版本名称：', title='下载新版本',
+                                                            default=f'{self.platform_choice[10:]}-{self.version_choice}')
+                if self.DownloadVersionName == None:
+                    self.DownloadVersionProgressWindow.destroy()
+                    self.DownloadVersionWindow.destroy()
+                    return
+                try:
+                    os.mkdir(f'{self.sl_settings.versions_path}/{self.DownloadVersionName}')
+                    os.mkdir(f'{self.sl_settings.versions_path}/{self.DownloadVersionName}/server')
+                except:
+                    tkinter.messagebox.showerror(title='文件夹已存在', message=f'{self.DownloadVersionName}已存在')
+                    self.DownloadVersionProgressWindow.destroy()
+                    self.DownloadVersionWindow.destroy()
+                    return
+                def get_file_size(url: str, raise_error: bool = False) -> int:
+                    self.response = requests.head(url)
+                    self.size= self.response.headers.get('Content-Length')
+                    if (self.size == None) and (raise_error == True):
+                        raise ValueError('该文件不支持多线程分段下载！')
+                    return int(self.size)
+                self.f = open(f'{self.sl_settings.versions_path}/{self.server_name}/server/{self.server_name}.jar', 'wb')
+                self.file_size = get_file_size(temp.get('href'))
+
+                @retry(tries=self.sl_settings.retries)
+                @multitasking.task
+                def start_download(start: int, end: int) -> None:
+                    _headers = self.sl_settings.headers.copy()
+                    _headers['Range'] = f'bytes={start}-{end}'
+                    self.response = session.get(temp.get('href'), headers=_headers, stream=True)
+                    chunks = []
+                    for chunk in self.response.iter_content(chunk_size=self.sl_settings.chunk_size):
+                        chunks.append(chunk)
+                        print(self.sl_settings.chunk_size)
+                    self.f.seek(start)
+                    for chunk in chunks:
+                        self.f.write(chunk)
+                    del chunks
+
+                session = requests.Session()
+                each_size = min(each_size, self.file_size)
 
                 '''
                 self.DownloadVersionProgressWindow = tkinter.Toplevel()
