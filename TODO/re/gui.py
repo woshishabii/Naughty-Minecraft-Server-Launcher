@@ -168,6 +168,19 @@ class ServerLauncherGUI:
                              for start in range(0, end, step)]
                     return parts
 
+                self.DownloadProgressWindow = tkinter.Toplevel()
+                self.DownloadProgressWindow.title('下载进度')
+                self.DownloadProgressWindow.geometry('630x150')
+
+                self.LabelDownloadProgress = tkinter.Label(self.DownloadProgressWindow, text='下载进度:')
+                self.LabelDownloadProgress.place(x=50, y=60)
+                self.CanvasDownloadProgress = tkinter.Canvas(self.DownloadProgressWindow, width=465, height=22, bg='white')
+                self.CanvasDownloadProgress.place(x=110, y=60)
+
+                self.DownloadProgressBar = self.CanvasDownloadProgress.create_rectangle(1.5, 1.5, 0, 23, width=0, fill='green')
+                x = self.file_size
+                n = 465 / x
+
                 @retry(tries=self.sl_settings.retries)
                 @multitasking.task
                 def start_download(start: int, end: int) -> None:
@@ -178,7 +191,7 @@ class ServerLauncherGUI:
                     for chunk in self.response.iter_content(chunk_size=self.sl_settings.chunk_size):
                         chunks.append(chunk)
                         bar.update(self.sl_settings.chunk_size)
-                        # print(self.file_size)
+                        # n = n + 465 / x
                     self.f.seek(start)
                     for chunk in chunks:
                         self.f.write(chunk)
@@ -226,7 +239,7 @@ class ServerLauncherGUI:
 
 
     def run_version(self):
-        if self.current_version == None:
+        if self.current_version is None:
             return
         else:
             self.working_directory = os.getcwd()
